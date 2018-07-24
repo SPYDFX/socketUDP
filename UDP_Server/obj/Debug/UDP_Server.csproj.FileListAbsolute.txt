@@ -1,0 +1,5 @@
+G:\spydf\soft\socketUDP\UDP_Server\bin\Debug\UDP_Server.exe.config
+G:\spydf\soft\socketUDP\UDP_Server\bin\Debug\UDP_Server.exe
+G:\spydf\soft\socketUDP\UDP_Server\bin\Debug\UDP_Server.pdb
+G:\spydf\soft\socketUDP\UDP_Server\obj\Debug\UDP_Server.exe
+G:\spydf\soft\socketUDP\UDP_Server\obj\Debug\UDP_Server.pdb

@@ -1,0 +1,6 @@
+G:\spydf\soft\socketUDP\UDP_client\bin\Debug\UDP_client.exe.config
+G:\spydf\soft\socketUDP\UDP_client\bin\Debug\UDP_client.exe
+G:\spydf\soft\socketUDP\UDP_client\bin\Debug\UDP_client.pdb
+G:\spydf\soft\socketUDP\UDP_client\obj\Debug\UDP_client.csprojResolveAssemblyReference.cache
+G:\spydf\soft\socketUDP\UDP_client\obj\Debug\UDP_client.exe
+G:\spydf\soft\socketUDP\UDP_client\obj\Debug\UDP_client.pdb

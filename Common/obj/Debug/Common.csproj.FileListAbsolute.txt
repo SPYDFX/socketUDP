@@ -1,0 +1,5 @@
+G:\spydf\soft\socketUDP\Common\bin\Debug\Common.dll
+G:\spydf\soft\socketUDP\Common\bin\Debug\Common.pdb
+G:\spydf\soft\socketUDP\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+G:\spydf\soft\socketUDP\Common\obj\Debug\Common.dll
+G:\spydf\soft\socketUDP\Common\obj\Debug\Common.pdb

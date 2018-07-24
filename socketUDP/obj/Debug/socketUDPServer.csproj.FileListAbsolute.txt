@@ -1,0 +1,11 @@
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\socketUDP.exe.config
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\socketUDP.exe
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\socketUDP.pdb
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\Common.dll
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\Common.pdb
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDPServer.csprojResolveAssemblyReference.cache
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDP.Form1.resources
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDP.Properties.Resources.resources
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDPServer.csproj.GenerateResource.Cache
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDP.exe
+G:\spydf\soft\socketUDP\socketUDP\obj\Debug\socketUDP.pdb

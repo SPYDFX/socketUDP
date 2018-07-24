@@ -1,0 +1,1 @@
+G:\spydf\soft\socketUDP\socketUDP\bin\Debug\socketUDP.exe.config
