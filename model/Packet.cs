@@ -33,11 +33,11 @@ namespace model
             int ChatNameLength = BitConverter.ToInt32(dataStream, 4);
             int MessageLength = BitConverter.ToInt32(dataStream, 8);
             if (ChatNameLength > 0)
-                this.ChatName = Encoding.UTF8.GetString(dataStream, 12, ChatNameLength);
+                this.ChatName = Encoding.GetEncoding("GB2312").GetString(dataStream, 12, ChatNameLength);
             else
                 this.ChatName = null;
             if (MessageLength > 0)
-                this.ChatMessage = Encoding.UTF8.GetString(dataStream, 12 + ChatNameLength, MessageLength);
+                this.ChatMessage = Encoding.GetEncoding("GB2312").GetString(dataStream, 12 + ChatNameLength, MessageLength);
             else
                 this.ChatMessage = null;
         }
@@ -59,10 +59,10 @@ namespace model
                 dataStream.AddRange(BitConverter.GetBytes(0));
 
             if (this.ChatName != null)
-                dataStream.AddRange(Encoding.UTF8.GetBytes(this.ChatName)); ;
+                dataStream.AddRange(Encoding.GetEncoding("GB2312").GetBytes(this.ChatName)); ;
 
             if (this.ChatMessage != null)
-                dataStream.AddRange(Encoding.UTF8.GetBytes(this.ChatMessage));
+                dataStream.AddRange(Encoding.GetEncoding("GB2312").GetBytes(this.ChatMessage));
             return dataStream.ToArray();
         }
     }

@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -83,6 +84,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{D57509C9-8459-4BBA-A4CC-48953E6D99B1}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\model\model.csproj">
+      <Project>{949732DD-3D39-49FC-8DAD-B38DFB94249E}</Project>
+      <Name>model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

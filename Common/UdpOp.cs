@@ -10,37 +10,51 @@ namespace Common
 {
     public class UdpOp
     {
+        private Socket serverSocket;
+        private byte[] dataStream = new byte[1024];
+        public void Initialize()
+        {
+            var ip = GetLocalIPAddress();
+            if (!string.IsNullOrWhiteSpace(ip))
+            {
+                serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                IPEndPoint server = new IPEndPoint(IPAddress.Parse(ip), 30000);
+                serverSocket.Bind(server);
+            }
+
+        }
+        public string GetLocalIPAddress()
+        {
+            string ipAddress = string.Empty;
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ipAddress = ip.ToString();
+                }
+            }
+            return ipAddress;
+        }
         public void StartServer()
         {
-            int recv;
-            byte[] revData = new byte[1024];
-            byte[] sendData = new byte[1024];
-            IPEndPoint ip = new IPEndPoint(IPAddress.Parse("192.168.10.57"), 5555);
-            Socket newsock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            newsock.Bind(ip);
-            Console.WriteLine("我是服务端，主机名：{0}", Dns.GetHostName());
-            Console.WriteLine("等待客户端连接.....");
-            IPEndPoint sender = new IPEndPoint(IPAddress.Parse("192.168.10.57"), 0);
-            EndPoint Remote = (EndPoint)(sender);
-            recv = newsock.ReceiveFrom(revData, ref Remote);
-            Console.WriteLine("我是服务端，客户端{0}连接成功", Remote.ToString());
-            Console.WriteLine(Encoding.Unicode.GetString(revData, 0, recv));
-            string welcome = "你好，我是服务器";
-            sendData = Encoding.Unicode.GetBytes(welcome);
-            newsock.SendTo(sendData, sendData.Length, SocketFlags.None, Remote);
-            while (true)
-            {
-                sendData = new byte[1024];
-                recv = newsock.ReceiveFrom(sendData, ref Remote);
-                string recvData = string.Format("客户端{0}发送：{1}", Remote.ToString(), Encoding.Unicode.GetString(sendData, 0, recv));
-                Console.WriteLine(recvData);
-                // string recvData =string.Format("服务器接收到数据{0}", Encoding.ASCII.GetString(data, 0, recv));
-                // byte.Parse(recvData);
-                string recvDateSucceed = string.Format("服务器已收到.");
-                sendData = Encoding.Unicode.GetBytes(recvDateSucceed);
-                newsock.SendTo(sendData, sendData.Length, SocketFlags.None, Remote);
-            }
+            IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
+            EndPoint epSender = (EndPoint)clients;
+          //  serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
+         
         }
+
+        //void ReciveMsg()
+        //{
+        //    while (true)
+        //    {
+        //        EndPoint point = new IPEndPoint(IPAddress.Any, 0);//用来保存发送方的ip和端口号
+        //        byte[] buffer = new byte[1024];
+        //        int length = client.ReceiveFrom(buffer, ref point);//接收数据报
+        //        string message = Encoding.UTF8.GetString(buffer, 0, length);
+        //        Console.WriteLine(point.ToString() + message);
+        //    }
+        //}
 
         public void StartClent()
         {
