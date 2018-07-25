@@ -19,6 +19,11 @@ namespace socketUDP
     public partial class frmServer : Form
     {
         UdpOp udp = new UdpOp();
+        private ArrayList clientList;
+        private Socket serverSocket;
+        private byte[] dataStream = new byte[1024];
+        private delegate void UpdateStatusDelegate(string status);
+        private UpdateStatusDelegate updateStatusDelegate = null;
         public frmServer()
         {
             InitializeComponent();
@@ -26,22 +31,16 @@ namespace socketUDP
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
             serverSocket.Bind(server);
+            this.clientList = new ArrayList();
         }
 
-        private ArrayList clientList;
-        private Socket serverSocket;
-        private byte[] dataStream = new byte[1024];
-        private delegate void UpdateStatusDelegate(string status);
-        private UpdateStatusDelegate updateStatusDelegate = null;
+       
         private void btnStart_Click(object sender, EventArgs e)
         {
-            this.clientList = new ArrayList();
-
-          
-
-            if(btnStart.Text=="关闭")
+           
+            if (btnStart.Text=="关闭")
             {
-                serverSocket.Shutdown(SocketShutdown.Both);
+                //serverSocket.Shutdown(SocketShutdown.Both);
                 btnStart.Text = "开启";
             }
             else
@@ -102,7 +101,7 @@ namespace socketUDP
 
             foreach (Client client in this.clientList)
             {
-                if (client.endPoint != senderEndPoint || sendData.DataID != Packet.MessageType.Login)
+                if (client.endPoint != senderEndPoint /*|| sendData.DataID != Packet.MessageType.Login*/)
                 {
                     serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.SendData), client.endPoint);
                 }
