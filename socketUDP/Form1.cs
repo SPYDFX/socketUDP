@@ -38,9 +38,18 @@ namespace socketUDP
             IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
             serverSocket.Bind(server);
 
-            IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
-            EndPoint epSender = (EndPoint)clients;
-            serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
+            if(btnStart.Text=="关闭")
+            {
+                serverSocket.Shutdown(SocketShutdown.Both);
+                btnStart.Text = "开启";
+            }
+            else
+            {
+                IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
+                EndPoint epSender = (EndPoint)clients;
+                serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
+                btnStart.Text = "关闭";
+            }
         }
 
         private void ReceiveData(IAsyncResult asyncResult)
