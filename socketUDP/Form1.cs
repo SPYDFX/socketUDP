@@ -23,6 +23,9 @@ namespace socketUDP
         {
             InitializeComponent();
             txtIP.Text = udp.GetLocalIPAddress();
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
+            serverSocket.Bind(server);
         }
 
         private ArrayList clientList;
@@ -34,9 +37,7 @@ namespace socketUDP
         {
             this.clientList = new ArrayList();
 
-            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
-            serverSocket.Bind(server);
+          
 
             if(btnStart.Text=="关闭")
             {
