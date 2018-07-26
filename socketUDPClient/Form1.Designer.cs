@@ -32,15 +32,14 @@
             this.txtUname = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPwd = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(189, 228);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConnect.Location = new System.Drawing.Point(126, 162);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(270, 34);
+            this.btnConnect.Size = new System.Drawing.Size(180, 23);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "登录";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -48,51 +47,47 @@
             // 
             // txtUname
             // 
-            this.txtUname.Location = new System.Drawing.Point(189, 114);
-            this.txtUname.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUname.Location = new System.Drawing.Point(126, 62);
             this.txtUname.Name = "txtUname";
-            this.txtUname.Size = new System.Drawing.Size(268, 28);
+            this.txtUname.Size = new System.Drawing.Size(180, 21);
             this.txtUname.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 118);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(56, 65);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 18);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 2;
-            this.label1.Text = "用户名：";
+            this.label1.Text = "账  号：";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(84, 166);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(56, 118);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 4;
             this.label2.Text = "密  码：";
             // 
-            // textBox1
+            // txtPwd
             // 
-            this.textBox1.Location = new System.Drawing.Point(189, 162);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(268, 28);
-            this.textBox1.TabIndex = 3;
+            this.txtPwd.Location = new System.Drawing.Point(126, 115);
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.PasswordChar = '*';
+            this.txtPwd.Size = new System.Drawing.Size(180, 21);
+            this.txtPwd.TabIndex = 3;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 336);
+            this.ClientSize = new System.Drawing.Size(348, 224);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtUname);
             this.Controls.Add(this.btnConnect);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "客户端";
             this.ResumeLayout(false);
@@ -106,7 +101,7 @@
         private System.Windows.Forms.TextBox txtUname;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPwd;
     }
 }
 
