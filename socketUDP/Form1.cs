@@ -32,13 +32,14 @@ namespace socketUDP
             IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
             serverSocket.Bind(server);
             this.clientList = new ArrayList();
+            updateStatusDelegate +=new UpdateStatusDelegate( showmsg);
         }
 
-       
+
         private void btnStart_Click(object sender, EventArgs e)
         {
-           
-            if (btnStart.Text=="关闭")
+
+            if (btnStart.Text == "关闭")
             {
                 //serverSocket.Shutdown(SocketShutdown.Both);
                 btnStart.Text = "开启";
@@ -80,7 +81,7 @@ namespace socketUDP
                     this.clientList.Add(client);
 
                     sendData.ChatMessage = "--- " + receivedData.ChatName + " has logged in ---";
-                    lstBox.Items.Add(client.name+"上线；（IP地址：" + client.endPoint+")");
+                    lstBox.Items.Add(client.name + "上线；（IP地址：" + client.endPoint + ")");
                     break;
 
                 case Packet.MessageType.Logout:
@@ -101,7 +102,7 @@ namespace socketUDP
 
             foreach (Client client in this.clientList)
             {
-                if (client.endPoint != senderEndPoint /*|| sendData.DataID != Packet.MessageType.Login*/)
+                if (client.endPoint != senderEndPoint || sendData.DataID != Packet.MessageType.Login)
                 {
                     serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.SendData), client.endPoint);
                 }
@@ -109,7 +110,8 @@ namespace socketUDP
 
             serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref senderEndPoint, new AsyncCallback(this.ReceiveData), senderEndPoint);
 
-            this.Invoke(this.updateStatusDelegate, new object[] { sendData.ChatMessage });
+            //this.Invoke(this.updateStatusDelegate, new object[] { sendData.ChatMessage });
+            showmsg(sendData.ChatMessage);
         }
         private void SendData(IAsyncResult asyncResult)
         {
@@ -127,6 +129,11 @@ namespace socketUDP
         private void frmServer_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void showmsg(string msg)
+        {
+            lstBox.Items.Add("转发信息：" + msg);
         }
     }
 }

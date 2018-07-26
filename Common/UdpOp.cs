@@ -41,7 +41,6 @@ namespace Common
             IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
             EndPoint epSender = (EndPoint)clients;
           //  serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref epSender, new AsyncCallback(ReceiveData), epSender);
-         
         }
 
         //void ReciveMsg()

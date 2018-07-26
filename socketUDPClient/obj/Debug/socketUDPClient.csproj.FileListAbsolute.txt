@@ -28,3 +28,4 @@ D:\软件\develop\project\socketUDP1\socketUDPClient\obj\Debug\socketUDPClient.c
 D:\软件\develop\project\socketUDP1\socketUDPClient\obj\Debug\socketUDPClient.exe
 D:\软件\develop\project\socketUDP1\socketUDPClient\obj\Debug\socketUDPClient.pdb
 G:\spydf\soft\socketUDP\socketUDPClient\obj\Debug\socketUDPClient.FrmUserList.resources
+D:\软件\develop\project\socketUDP1\socketUDPClient\obj\Debug\socketUDPClient.FrmUserList.resources
