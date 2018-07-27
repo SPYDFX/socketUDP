@@ -117,8 +117,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\close.png" />
-    <Content Include="Images\min.png" />
+    <Content Include="Images\account.png" />
+    <Content Include="Images\close3.png" />
+    <Content Include="Images\min2.png" />
+    <Content Include="Images\pwd.png" />
     <Content Include="Images\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
