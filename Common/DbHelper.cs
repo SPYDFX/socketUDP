@@ -36,6 +36,7 @@ namespace Common
             DataTable dt = new DataTable();
             sqlda.Fill(dt);
             connection.Close();
+            connection.Dispose();
             return dt;
         }
 
@@ -53,6 +54,24 @@ namespace Common
         {
             string cmdStr = string.Format("select {2} from {0} where {1}", tbName, strWhere,strSelect);
             return GetTable(cmdStr);
+        }
+
+        public static int UpdateTable(string sqlStr)
+        {
+            int ret = 0;
+            SqlConnection connection = new SqlConnection(strcon);
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(sqlStr,connection);
+            ret = cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            connection.Close();
+            connection.Dispose();
+            return ret;
+        }
+        public static int UpdateTableByCondition(string tbName,string strWhere,string strSet)
+        {
+            string cmdStr = string.Format("update {0} set {1}  where {2}", tbName, strSet ,strWhere);
+            return UpdateTable(cmdStr);
         }
     }
 }

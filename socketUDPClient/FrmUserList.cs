@@ -1,4 +1,5 @@
-﻿using System;
+﻿using model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,36 +13,17 @@ namespace socketUDPClient
 {
     public partial class FrmUserList : Form
     {
+        UserBLL bll = new UserBLL();
         private int startX, startY;
-        public FrmUserList()
+        private string account;
+        private List<UserInfo> onLineUserList;
+        private List<UserInfo> offLineUserList;
+        public FrmUserList(string account)
         {
             InitializeComponent();
-            
-            ListView list = new ListViewEx();
-            list.View =View.Tile;
-
-            this.Controls.Add(list);
-            list.BeginUpdate();
-            //imageList1.ImageSize = new Size(1,20);
-            list.LargeImageList = imageList1;
-
-            list.SmallImageList = imageList1;
-            //list.Size = new Size(100, 100);
-            //list.Location = new Point(300, 100);
-            for (int i = 0; i < 15; i++)
-            {
-                ListViewItem lvi = new ListViewItem();
-
-                lvi.ImageIndex = i;
-                lvi.Text = "item" + i;
-                
-                list.Items.Add(lvi);
-            }
-            list.BorderStyle = BorderStyle.None;
-            list.FullRowSelect = true;
-            list.Dock = DockStyle.Fill;
-            list.Parent = panel2;
-            list.EndUpdate();
+            this.account = account;
+            InitializeBaseInfo();
+            InitializeUserList();
         }
 
         private void FrmUserList_MouseDown(object sender, MouseEventArgs e)
@@ -64,12 +46,50 @@ namespace socketUDPClient
             this.WindowState = FormWindowState.Minimized;
         }
 
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void FrmUserList_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 this.Left += e.X - startX;
                 this.Top += e.Y - startY;
+            }
+        }
+        private void InitializeBaseInfo()
+        {
+            var userInfo = bll.GetUserInfo(this.account);
+            lblUserName.Text = userInfo.userName;
+        }
+        private void InitializeUserList()
+        {
+            var ulist = bll.GetUserList();
+            onLineUserList = ulist.Where(u => u.onLine == 1).ToList();
+            offLineUserList= ulist.Where(u => u.onLine == 0).ToList();
+            if(onLineUserList!=null&& onLineUserList.Count>0)
+            {
+                ListView list = new ListViewEx();
+                list.View = View.Tile;
+                list.BeginUpdate();
+                list.LargeImageList = imageList1;
+                list.BackColor = Color.White;
+                list.SmallImageList = imageList1;
+                foreach (var u in onLineUserList)
+                {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.ImageIndex = 1;
+                    lvi.Text = u.userName;
+                    list.Items.Add(lvi);
+                }
+                list.BorderStyle = BorderStyle.None;
+                list.FullRowSelect = true;
+                list.Dock = DockStyle.Fill;
+                list.Parent = panel2;
+                list.EndUpdate();
+
             }
         }
     }

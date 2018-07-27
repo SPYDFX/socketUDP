@@ -23,7 +23,7 @@ namespace Common
             }
 
         }
-        public string GetLocalIPAddress()
+        public static string GetLocalIPAddress()
         {
             string ipAddress = string.Empty;
             var host = Dns.GetHostEntry(Dns.GetHostName());

@@ -16,7 +16,7 @@ namespace socketUDPClient
     public partial class Form1 : Form
     {
         private int startX, startY;
-        LoginBLL bll = new LoginBLL();
+        UserBLL bll = new UserBLL();
         public Form1()
         {
             InitializeComponent();
@@ -29,14 +29,14 @@ namespace socketUDPClient
             {
                 UserInfo user = new UserInfo()
                 {
-                    userName = txtUname.Text,
+                    userAccount = txtUname.Text,
                     userPwd=txtPwd.Text
                 };
 
                if( bll.Login(user))
                 {
                     this.Hide();
-                    FrmClient client = new FrmClient(txtUname.Text.Trim());
+                    FrmUserList client = new FrmUserList(user.userAccount);
                     client.Show();
                     client.Closed += (s, args) => this.Close();
                 }

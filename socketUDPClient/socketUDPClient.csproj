@@ -72,8 +72,8 @@
     <Compile Include="ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="LoginBLL.cs" />
-    <Compile Include="LoginDal.cs" />
+    <Compile Include="UserBLL.cs" />
+    <Compile Include="UserDal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -124,6 +124,7 @@
     <Content Include="Images\min2.png" />
     <Content Include="Images\pwd.png" />
     <Content Include="Images\search.png" />
+    <None Include="Resources\Jellyfish.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
