@@ -20,7 +20,8 @@ namespace socketUDPClient
                 var dt = DbHelper.GetTable(strWhere);
                 if(dt!=null&&dt.Rows.Count>0)
                 {
-
+                    user.userPwd = dt.Rows[0]["uPwd"].ToString();
+                    user.userName = account;
                 }
             }
             return user;

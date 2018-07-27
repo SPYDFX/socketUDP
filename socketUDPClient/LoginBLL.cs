@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace socketUDPClient
 {
-    public  class LoginBLL
+    public class LoginBLL
     {
         LoginDal dal = new LoginDal();
         public bool Login(UserInfo model)
         {
             bool isSuccess = false;
-            var ret=dal.GetLoginInfoByAccount(model);
+            var ret = dal.GetLoginInfoByAccount(model.userName);
+            if (ret != null)
+            {
+                if (ret.userPwd == model.userPwd)
+                {
+                    isSuccess = true;
+                }
+            }
             return isSuccess;
         }
     }

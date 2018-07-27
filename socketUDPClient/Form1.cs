@@ -1,4 +1,5 @@
 ﻿using Common;
+using model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace socketUDPClient
     public partial class Form1 : Form
     {
         private int startX, startY;
+        LoginBLL bll = new LoginBLL();
         public Form1()
         {
             InitializeComponent();
@@ -25,11 +27,24 @@ namespace socketUDPClient
         {
             if (!string.IsNullOrWhiteSpace(txtUname.Text)&&!string.IsNullOrWhiteSpace(txtPwd.Text.Trim()))
             {
+                UserInfo user = new UserInfo()
+                {
+                    userName = txtUname.Text,
+                    userPwd=txtPwd.Text
+                };
 
-                this.Hide();
-                FrmClient client = new FrmClient(txtUname.Text.Trim());
-                client.Show();
-                client.Closed += (s, args) => this.Close();
+               if( bll.Login(user))
+                {
+                    this.Hide();
+                    FrmClient client = new FrmClient(txtUname.Text.Trim());
+                    client.Show();
+                    client.Closed += (s, args) => this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("登录失败");
+                }
+                
             }
         }
 
