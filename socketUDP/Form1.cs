@@ -57,7 +57,8 @@ namespace socketUDP
         {
             byte[] data;
 
-            Packet receivedData = new Packet(this.dataStream);
+            // Packet receivedData = new Packet(this.dataStream);
+            Packet receivedData = (Packet)ByteHelper.Deserialize(this.dataStream);
             Packet sendData = new Packet();
             IPEndPoint clients = new IPEndPoint(IPAddress.Any, 0);
             EndPoint senderEndPoint = (EndPoint)clients;
@@ -69,11 +70,11 @@ namespace socketUDP
 
             switch (receivedData.DataID)
             {
-                case Packet.MessageType.Message:
+                case MessageType.Message:
                     sendData.ChatMessage = receivedData.ChatName + ": " + receivedData.ChatMessage;
                     break;
 
-                case Packet.MessageType.Login:
+                case MessageType.Login:
                     Client client = new Client();
                     client.endPoint = senderEndPoint;
                     client.name = receivedData.ChatName;
@@ -84,7 +85,7 @@ namespace socketUDP
                     lstBox.Items.Add(client.name + "上线；（IP地址：" + client.endPoint + ")");
                     break;
 
-                case Packet.MessageType.Logout:
+                case MessageType.Logout:
                     foreach (Client c in this.clientList)
                     {
                         if (c.endPoint.Equals(senderEndPoint))
@@ -98,11 +99,11 @@ namespace socketUDP
                     break;
             }
 
-            data = sendData.GetDataStream();
+            data = ByteHelper.Serialize(sendData);//sendData.GetDataStream();
 
             foreach (Client client in this.clientList)
             {
-                if (client.endPoint != senderEndPoint || sendData.DataID != Packet.MessageType.Login)
+                if (client.endPoint != senderEndPoint || sendData.DataID != MessageType.Login)
                 {
                     serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.SendData), client.endPoint);
                 }

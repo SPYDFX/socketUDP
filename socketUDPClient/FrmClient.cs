@@ -1,4 +1,5 @@
-﻿using model;
+﻿using Common;
+using model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,8 +70,8 @@ namespace socketUDPClient
                 Packet sendData = new Packet();
                 sendData.ChatName = this.userName;
                 sendData.ChatMessage = txtSendMsg.Text;
-                sendData.DataID = Packet.MessageType.Message;
-                byte[] byteData = sendData.GetDataStream();
+                sendData.DataID = MessageType.Message;
+                byte[] byteData = ByteHelper.Serialize(sendData);//sendData.GetDataStream();
                 clientSocket.BeginSendTo(byteData, 0, byteData.Length, SocketFlags.None, serverEndPoint, new AsyncCallback(this.SendData), null);
                 txtSendMsg.Text = String.Empty;
             }
@@ -84,8 +85,8 @@ namespace socketUDPClient
             {
                 Packet sendData = new Packet();
                 sendData.ChatName = this.userName;
-                sendData.DataID = Packet.MessageType.Login;
-                byte[] data = sendData.GetDataStream();
+                sendData.DataID = MessageType.Login;
+                byte[] data = ByteHelper.Serialize(sendData);//sendData.GetDataStream();
                 clientSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, serverEndPoint, new AsyncCallback(this.SendData), null);
                 
             }
@@ -109,9 +110,9 @@ namespace socketUDPClient
         {
             this.clientSocket.EndReceive(a);
 
-            Packet receivedData = new Packet(this.dataStream);
-
-            if (receivedData.DataID == Packet.MessageType.Login)
+            // Packet receivedData = new Packet(this.dataStream);
+            Packet receivedData =(Packet)ByteHelper.Deserialize(this.dataStream);
+            if (receivedData.DataID == MessageType.Login)
             {
                 //lstUser.Items.Add(receivedData.ChatName);
             }

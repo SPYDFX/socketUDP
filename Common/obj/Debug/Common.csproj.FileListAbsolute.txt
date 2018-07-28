@@ -9,3 +9,9 @@ D:\软件\develop\project\socketUDP1\Common\obj\Debug\Common.csprojResolveAssemb
 D:\软件\develop\project\socketUDP1\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\软件\develop\project\socketUDP1\Common\obj\Debug\Common.dll
 D:\软件\develop\project\socketUDP1\Common\obj\Debug\Common.pdb
+D:\软件\develop\project\socketUDP2\Common\bin\Debug\Common.dll
+D:\软件\develop\project\socketUDP2\Common\bin\Debug\Common.pdb
+D:\软件\develop\project\socketUDP2\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\软件\develop\project\socketUDP2\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\软件\develop\project\socketUDP2\Common\obj\Debug\Common.dll
+D:\软件\develop\project\socketUDP2\Common\obj\Debug\Common.pdb
