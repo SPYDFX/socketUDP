@@ -3,3 +3,9 @@ G:\spydf\soft\socketUDP\UDP_Server\bin\Debug\UDP_Server.exe
 G:\spydf\soft\socketUDP\UDP_Server\bin\Debug\UDP_Server.pdb
 G:\spydf\soft\socketUDP\UDP_Server\obj\Debug\UDP_Server.exe
 G:\spydf\soft\socketUDP\UDP_Server\obj\Debug\UDP_Server.pdb
+D:\软件\develop\project\socketUDP2\UDP_Server\bin\Debug\UDP_Server.exe.config
+D:\软件\develop\project\socketUDP2\UDP_Server\bin\Debug\UDP_Server.exe
+D:\软件\develop\project\socketUDP2\UDP_Server\bin\Debug\UDP_Server.pdb
+D:\软件\develop\project\socketUDP2\UDP_Server\obj\Debug\UDP_Server.csproj.CoreCompileInputs.cache
+D:\软件\develop\project\socketUDP2\UDP_Server\obj\Debug\UDP_Server.exe
+D:\软件\develop\project\socketUDP2\UDP_Server\obj\Debug\UDP_Server.pdb

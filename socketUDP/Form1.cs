@@ -27,7 +27,7 @@ namespace socketUDP
         public frmServer()
         {
             InitializeComponent();
-            txtIP.Text = udp.GetLocalIPAddress();
+            txtIP.Text = UdpOp.GetLocalIPAddress();
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint server = new IPEndPoint(IPAddress.Any, 30000);
             serverSocket.Bind(server);

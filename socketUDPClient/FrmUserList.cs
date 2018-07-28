@@ -18,6 +18,10 @@ namespace socketUDPClient
         private string account;
         private List<UserInfo> onLineUserList;
         private List<UserInfo> offLineUserList;
+        private ListView listOnLine;
+        private ListView listOffLine;
+        private Dictionary<string, Form> dicChatFrm = new Dictionary<string, Form>();
+
         public FrmUserList(string account)
         {
             InitializeComponent();
@@ -68,29 +72,94 @@ namespace socketUDPClient
         {
             var ulist = bll.GetUserList();
             onLineUserList = ulist.Where(u => u.onLine == 1).ToList();
-            offLineUserList= ulist.Where(u => u.onLine == 0).ToList();
-            if(onLineUserList!=null&& onLineUserList.Count>0)
+            offLineUserList = ulist.Where(u => u.onLine == 0).ToList();
+
+            if (onLineUserList != null && onLineUserList.Count > 0)
             {
-                ListView list = new ListViewEx();
+                listOnLine = new ListViewEx();
+                UserListDisplay(onLineUserList, listOnLine);
+            }
+            if (offLineUserList != null && offLineUserList.Count > 0)
+            {
+                listOffLine = new ListViewEx();
+                UserListDisplay(offLineUserList, listOffLine);
+            }
+            listOnLine.Visible = true;
+            listOffLine.Visible = false;
+        }
+
+        private void btnOnLineUserList_Click(object sender, EventArgs e)
+        {
+            listOnLine.Visible = true;
+            listOffLine.Visible = false;
+        }
+
+        private void btnOffLineUserList_Click(object sender, EventArgs e)
+        {
+            listOnLine.Visible = false;
+            listOffLine.Visible = true;
+        }
+
+        public void UserListDisplay(List<UserInfo> userList, ListView list)
+        {
+            if (userList != null && userList.Count > 0)
+            {
                 list.View = View.Tile;
                 list.BeginUpdate();
                 list.LargeImageList = imageList1;
                 list.BackColor = Color.White;
                 list.SmallImageList = imageList1;
-                foreach (var u in onLineUserList)
+                foreach (var u in userList)
                 {
                     ListViewItem lvi = new ListViewItem();
                     lvi.ImageIndex = 1;
-                    lvi.Text = u.userName;
+                    lvi.Text = u.userName+"-"+u.userAccount;
+                   
                     list.Items.Add(lvi);
+
                 }
                 list.BorderStyle = BorderStyle.None;
                 list.FullRowSelect = true;
-                list.Dock = DockStyle.Fill;
                 list.Parent = panel2;
+                list.Dock = DockStyle.Fill;
                 list.EndUpdate();
-
+                list.MouseUp += new MouseEventHandler(MouseEvent);
             }
+        }
+
+        private void MouseEvent(object sender, MouseEventArgs e)
+        {
+            if(listOnLine.Visible)
+            {
+                if (listOnLine.SelectedItems.Count > 0)
+                {
+                    var txt = listOnLine.SelectedItems[0].Text;
+                    // MessageBox.Show(txt);
+                    var cName = txt.Split('-').ToList()[0];
+                    var accout = txt.Split('-').ToList()[1];
+                    if(!dicChatFrm.Keys.Contains(accout))
+                    {
+                        FrmClient chatClient = new FrmClient(cName, accout);
+                        chatClient.Show();
+                        dicChatFrm.Add(accout, chatClient);
+                    }
+                    else
+                    {
+                        var frm =dicChatFrm[accout];
+                        frm.Show();
+                    }
+                   
+                }
+            }
+            else
+            {
+                if (listOffLine.SelectedItems.Count > 0)
+                {
+                    var txt = listOffLine.SelectedItems[0].Text;
+                   // MessageBox.Show(txt);
+                }
+            }
+           
         }
     }
 }

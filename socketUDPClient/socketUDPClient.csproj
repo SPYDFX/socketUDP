@@ -120,10 +120,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\account.png" />
+    <Content Include="Images\bq.png" />
     <Content Include="Images\close3.png" />
+    <Content Include="Images\jianqie.png" />
     <Content Include="Images\min2.png" />
+    <Content Include="Images\pic.png" />
     <Content Include="Images\pwd.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\wenjian.png" />
     <None Include="Resources\Jellyfish.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

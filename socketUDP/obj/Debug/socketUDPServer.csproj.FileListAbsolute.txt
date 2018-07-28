@@ -25,3 +25,17 @@ D:\软件\develop\project\socketUDP1\socketUDP\obj\Debug\socketUDPServer.csproj.
 D:\软件\develop\project\socketUDP1\socketUDP\obj\Debug\socketUDPServer.csproj.CoreCompileInputs.cache
 D:\软件\develop\project\socketUDP1\socketUDP\obj\Debug\socketUDP.exe
 D:\软件\develop\project\socketUDP1\socketUDP\obj\Debug\socketUDP.pdb
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDPServer.csprojResolveAssemblyReference.cache
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDP.frmServer.resources
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDP.Properties.Resources.resources
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDPServer.csproj.GenerateResource.Cache
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDPServer.csproj.CoreCompileInputs.cache
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDP.exe
+D:\软件\develop\project\socketUDP2\socketUDP\obj\Debug\socketUDP.pdb
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\socketUDP.exe.config
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\socketUDP.exe
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\socketUDP.pdb
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\Common.dll
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\model.dll
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\Common.pdb
+D:\软件\develop\project\socketUDP2\socketUDP\bin\Debug\model.pdb

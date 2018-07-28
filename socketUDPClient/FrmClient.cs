@@ -16,6 +16,7 @@ namespace socketUDPClient
 {
     public partial class FrmClient : Form
     {
+        private int startX, startY;
         public string userName { get; set; }
         public Socket clientSocket { get; set; }
         public IPAddress serverIP
@@ -39,12 +40,15 @@ namespace socketUDPClient
 
         private delegate void DisplayMessageDelegate(string message);
         private DisplayMessageDelegate displayMessageDelegate = null;
-
-        public FrmClient(string cName)
+        public FrmClient()
         {
             InitializeComponent();
-            this.userName = cName;
-
+        }
+        public FrmClient(string cName,string account)
+        {
+            InitializeComponent();
+            this.userName = account;
+            lblChatName.Text = cName;
             this.clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
             IPEndPoint server = new IPEndPoint(serverIP, port);
@@ -83,7 +87,7 @@ namespace socketUDPClient
                 sendData.DataID = Packet.MessageType.Login;
                 byte[] data = sendData.GetDataStream();
                 clientSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, serverEndPoint, new AsyncCallback(this.SendData), null);
-                lstUser.Items.Add(this.userName);
+                
             }
            
         }
@@ -109,7 +113,7 @@ namespace socketUDPClient
 
             if (receivedData.DataID == Packet.MessageType.Login)
             {
-                lstUser.Items.Add(receivedData.ChatName);
+                //lstUser.Items.Add(receivedData.ChatName);
             }
 
             if (receivedData.ChatMessage != null)
@@ -119,16 +123,77 @@ namespace socketUDPClient
 
             clientSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref serverEndPoint, new AsyncCallback(this.ReceiveData), null);
 
-            if (!lstUser.Items.Contains(receivedData.ChatName))
-            {
-                lstUser.Items.Add(receivedData.ChatName);
-            }
+            //if (!lstUser.Items.Contains(receivedData.ChatName))
+            //{
+            //   // lstUser.Items.Add(receivedData.ChatName);
+            //}
         }
         #endregion
 
         private void DisplayMessage(string message)
         {
             lstMsg.Items.Add( message);
+        }
+
+        private void lstMsg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSendMsg_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnMin_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void FrmClient_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                startX = e.X;
+                startY = e.Y;
+            }
+        }
+
+        private void plHeader_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Left += e.X - startX;
+                this.Top += e.Y - startY;
+            }
+        }
+
+        private void plHeader_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                startX = e.X;
+                startY = e.Y;
+            }
+        }
+
+        private void FrmClient_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Left += e.X - startX;
+                this.Top += e.Y - startY;
+            }
         }
     }
 }
