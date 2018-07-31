@@ -121,14 +121,14 @@
   <data name="close3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\close3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="jianqie" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\jianqie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="min2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\min2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pwd" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\pwd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="jianqie" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\jianqie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="微信图片_20170517223918" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\微信图片_20170517223918.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bq" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\bq.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,13 +139,19 @@
   <data name="Jellyfish" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Jellyfish.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="wenjian" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\wenjian.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\pic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="account" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\account.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wenjian" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\wenjian.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pwd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\pwd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hz" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hz.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

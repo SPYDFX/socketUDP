@@ -93,6 +93,16 @@ namespace socketUDPClient.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap hz {
+            get {
+                object obj = ResourceManager.GetObject("hz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap Jellyfish {
             get {
                 object obj = ResourceManager.GetObject("Jellyfish", resourceCulture);
@@ -156,6 +166,16 @@ namespace socketUDPClient.Properties {
         internal static System.Drawing.Bitmap wenjian {
             get {
                 object obj = ResourceManager.GetObject("wenjian", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 微信图片_20170517223918 {
+            get {
+                object obj = ResourceManager.GetObject("微信图片_20170517223918", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
