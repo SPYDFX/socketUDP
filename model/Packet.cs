@@ -11,9 +11,11 @@ namespace model
     public class Packet
     {
         public MessageType DataID { get; set; }
+        public string ChatAcount { get; set; }
         public string ChatName { get; set; }
         public string ChatMessage { get; set; }
-
+        public string come { get; set; }
+        public string to { get; set; }
        
 
         //public Packet()
@@ -69,6 +71,7 @@ namespace model
         Login,
         Logout,
         Message,
+        ServerClose,
         Null
     }
 }

@@ -1,4 +1,5 @@
-﻿using model;
+﻿using Common;
+using model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,11 +21,12 @@ namespace socketUDPClient
         UserBLL bll = new UserBLL();
         private int startX, startY;
         private string account;
+        private string uname;
         private List<UserInfo> onLineUserList;
         private List<UserInfo> offLineUserList;
         private ListView listOnLine;
         private ListView listOffLine;
-        private Dictionary<string, Form> dicChatFrm = new Dictionary<string, Form>();//用来记录打开窗体对象
+        private Dictionary<string,FrmClientTcp> dicChatFrm = new Dictionary<string, FrmClientTcp>();//用来记录打开窗体对象
         Socket clientSocket = null;
         static Boolean isListen = true;
         Thread thDataFromServer;
@@ -90,6 +92,7 @@ namespace socketUDPClient
         {
             var userInfo = bll.GetUserInfo(this.account);
             lblUserName.Text = userInfo.userName;
+            this.uname = userInfo.userName;
         }
         private void InitializeUserList()
         {
@@ -204,7 +207,6 @@ namespace socketUDPClient
                 try
                 {
                     clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    //参考网址： https://msdn.microsoft.com/zh-cn/library/6aeby4wt.aspx
                     // Socket.BeginConnect 方法 (String, Int32, AsyncCallback, Object)
                     //开始一个对远程主机连接的异步请求
                     /* string host,     远程主机名
@@ -213,39 +215,30 @@ namespace socketUDPClient
                      * object state     一个用户定义对象，其中包含连接操作的相关信息。 当操作完成时，此对象会被传递给 requestCallback 委托
                      */
                     //如果txtIP里面有值，就选择填入的IP作为服务器IP，不填的话就默认是本机的
-                  
                     //IPAddress ipadr = IPAddress.Parse("192.168.1.100");
                     clientSocket.BeginConnect(serverIP, port, (args) =>
                     {
                         if (args.IsCompleted)   //判断该异步操作是否执行完毕
                         {
-                            Byte[] bytesSend = new Byte[4096];
-                            bytesSend = Encoding.UTF8.GetBytes("");  //用户名，这里是刚刚连接上时需要传过去
                             if (clientSocket != null && clientSocket.Connected)
                             {
-                                clientSocket.Send(bytesSend);
+                                Byte[] bytesSend = new Byte[4096];
+                                Packet sendData = new Packet();
+                                sendData.ChatName = this.uname;
+                                sendData.ChatAcount = this.account;
+                                sendData.DataID = MessageType.Login;
+                                byte[] data = ByteHelper.Serialize(sendData);
+                                clientSocket.Send(data);
                                 //txtName.Enabled = false;    //设置为不能再改名字了
                                 //txtSendMsg.Focus();         //将焦点放在
                                 thDataFromServer = new Thread(DataFromServer);
                                 thDataFromServer.IsBackground = true;
                                 thDataFromServer.Start();
                             }
-                            //txtName.BeginInvoke(new Action(() =>
-                            //{
-
-                            //    else
-                            //    {
-                            //        MessageBox.Show("服务器已关闭");
-                            //    }
-
-                            //}));
-                            //txtIP.BeginInvoke(new Action(() =>
-                            //{
-                            //    if (clientSocket != null && clientSocket.Connected)
-                            //    {
-                            //        txtIP.Enabled = false;
-                            //    }
-                            //}));
+                            else
+                            {
+                                //MessageBox.Show("服务器已关闭");
+                            }
                         }
                     }, null);
                 }
@@ -258,6 +251,59 @@ namespace socketUDPClient
             {
                // MessageBox.Show("你已经连接上服务器了");
             }
+        }
+
+        private void DataFromServer()
+        {
+            isListen = true;
+            try
+            {
+                while (isListen)
+                {
+                    Byte[] bytesFrom = new Byte[4096];
+                    Int32 len = clientSocket.Receive(bytesFrom);
+
+                    Packet receivedData = (Packet)ByteHelper.Deserialize(bytesFrom);
+                    if (receivedData!=null)
+                    {
+                        //如果收到服务器已经关闭的消息，那么就把客户端接口关了，免得出错，并在客户端界面上显示出来
+                        if (receivedData.DataID==MessageType.ServerClose)
+                        {
+                            clientSocket.Close();
+                            clientSocket = null;
+                            this.BeginInvoke(new Action(() =>
+                            {
+                                MessageBox.Show("服务器已关闭");
+
+                            }));
+                            thDataFromServer.Abort();   //这一句必须放在最后，不然这个进程都关了后面的就不会执行了
+                            return;
+                        }
+                        if(receivedData.DataID==MessageType.Message)
+                        {
+                            ShowMsg(receivedData.ChatMessage,receivedData.come);
+                        }
+                        
+                    }
+                }
+            }
+            catch (SocketException ex)
+            {
+                isListen = false;
+                if (clientSocket != null && clientSocket.Connected)
+                {
+                    //没有在客户端关闭连接，而是给服务器发送一个消息，在服务器端关闭连接
+                    //这样可以将异常的处理放到服务器。客户端关闭会让客户端和服务器都抛异常
+                    clientSocket.Send(Encoding.UTF8.GetBytes("$"));
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+
+        private void ShowMsg(String msg,string come)
+        {
+            dicChatFrm[come].DisplayMessage(msg);
+            dicChatFrm[come].Show();
         }
     }
 }

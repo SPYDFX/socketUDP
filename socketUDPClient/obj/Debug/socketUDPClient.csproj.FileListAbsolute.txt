@@ -48,3 +48,6 @@ D:\软件\develop\project\socketUDP2\socketUDPClient\obj\Debug\socketUDPClient.p
 D:\软件\develop\project\socketUDP2\socketUDPClient\obj\Debug\socketUDPClient.TestFrm.resources
 D:\软件\develop\project\socketUDP2\socketUDPClient\obj\Debug\socketUDPClient.TestFrmUersList.resources
 D:\软件\develop\project\socketUDP2\socketUDPClient\obj\Debug\socketUDPClient.FrmClientTcp.resources
+G:\spydf\soft\socketUDP\socketUDPClient\obj\Debug\socketUDPClient.FrmClientTcp.resources
+G:\spydf\soft\socketUDP\socketUDPClient\obj\Debug\socketUDPClient.TestFrm.resources
+G:\spydf\soft\socketUDP\socketUDPClient\obj\Debug\socketUDPClient.TestFrmUersList.resources

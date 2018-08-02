@@ -17,3 +17,5 @@ D:\软件\develop\project\socketUDP2\model\obj\Debug\model.csprojResolveAssembly
 D:\软件\develop\project\socketUDP2\model\obj\Debug\model.csproj.CoreCompileInputs.cache
 D:\软件\develop\project\socketUDP2\model\obj\Debug\model.dll
 D:\软件\develop\project\socketUDP2\model\obj\Debug\model.pdb
+G:\spydf\soft\socketUDP\model\bin\Debug\Common.dll
+G:\spydf\soft\socketUDP\model\bin\Debug\Common.pdb

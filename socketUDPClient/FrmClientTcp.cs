@@ -36,6 +36,10 @@ namespace socketUDPClient
         {
 
         }
+        public void DisplayMessage(string message)
+        {
+            lstMsg.Items.Add(message);
+        }
 
         private void FrmClientTcp_MouseMove(object sender, MouseEventArgs e)
         {

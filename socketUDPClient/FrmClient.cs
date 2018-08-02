@@ -131,7 +131,7 @@ namespace socketUDPClient
         }
         #endregion
 
-        private void DisplayMessage(string message)
+        public void DisplayMessage(string message)
         {
             lstMsg.Items.Add( message);
         }

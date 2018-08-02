@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "socketUDPServer", "socketUDP\socketUDPServer.csproj", "{B608C56F-2587-4253-B26E-00DAE8056100}"
 EndProject
@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP_Server", "UDP_Server\UD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP_client", "UDP_client\UDP_client.csproj", "{76A0D27C-3EFD-4812-8D98-DF0A1E5E0566}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatRoomServer", "..\chatRoomTcp\chatRoomServer\chatRoomServer\chatRoomServer.csproj", "{452EBD13-32E0-419F-947E-2E0B1FEB86C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatRoomClient", "chatRoomClient\chatRoomClient\chatRoomClient\chatRoomClient.csproj", "{F79D0946-8E4F-4549-8F79-AE483FE6B648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatRoomClient", "..\chatRoomTcp\chatRoomClient\chatRoomClient\chatRoomClient\chatRoomClient.csproj", "{F79D0946-8E4F-4549-8F79-AE483FE6B648}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chatRoomServer", "chatRoomServer\chatRoomServer\chatRoomServer.csproj", "{452EBD13-32E0-419F-947E-2E0B1FEB86C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +49,14 @@ Global
 		{76A0D27C-3EFD-4812-8D98-DF0A1E5E0566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76A0D27C-3EFD-4812-8D98-DF0A1E5E0566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76A0D27C-3EFD-4812-8D98-DF0A1E5E0566}.Release|Any CPU.Build.0 = Release|Any CPU
-		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F79D0946-8E4F-4549-8F79-AE483FE6B648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F79D0946-8E4F-4549-8F79-AE483FE6B648}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F79D0946-8E4F-4549-8F79-AE483FE6B648}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F79D0946-8E4F-4549-8F79-AE483FE6B648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{452EBD13-32E0-419F-947E-2E0B1FEB86C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
