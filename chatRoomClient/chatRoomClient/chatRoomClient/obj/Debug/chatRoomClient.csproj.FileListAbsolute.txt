@@ -25,3 +25,13 @@ C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomClie
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csproj.GenerateResource.Cache
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.exe
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.pdb
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.exe.config
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.exe
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.pdb
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csprojResolveAssemblyReference.cache
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.Form1.resources
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.Properties.Resources.resources
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csproj.GenerateResource.Cache
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csproj.CoreCompileInputs.cache
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.exe
+D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.pdb

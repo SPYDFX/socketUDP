@@ -14,7 +14,13 @@ namespace model
         public string ChatAcount { get; set; }
         public string ChatName { get; set; }
         public string ChatMessage { get; set; }
+        /// <summary>
+        /// 消息发出者
+        /// </summary>
         public string come { get; set; }
+        /// <summary>
+        /// 消息的接收者
+        /// </summary>
         public string to { get; set; }
        
 

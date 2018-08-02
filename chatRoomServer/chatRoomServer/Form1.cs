@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Security.Cryptography;
-
-
-//参考网址：  http://www.tuicool.com/articles/RBJFRn
-//参考网址：  http://zhangxuefei.site/p/59
+using model;
+using Common;
 
 namespace chatRoomServer
 {
@@ -26,7 +24,7 @@ namespace chatRoomServer
         public Form1()
         {
             InitializeComponent();
-            ipadr = IPAddress.Loopback;
+            ipadr = IPAddress.Parse("192.168.0.102") ;
         }
 
         //保存多个客户端的通信套接字
@@ -63,7 +61,7 @@ namespace chatRoomServer
                     //  protocol:   指定协议。常用的协议有，IPPROTO_TCP、IPPTOTO_UDP、IPPROTO_SCTP、IPPROTO_TIPC等
                     //并不是上面的type和protocol可以随意组合的，如SOCK_STREAM不可以跟IPPROTO_UDP组合。当protocol为0时，会自动选择type类型对应的默认协议
                     serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);     //AddressFamily.InterNetwork代表IPV4地址，不包含IPV6  
-                    
+
                     //端点
                     /*  在IPEndPoint类中有两个很有用的构造函数：
                         public IPEndPoint(long, int); 
@@ -72,7 +70,7 @@ namespace chatRoomServer
                      */
                     //IPAddress ipadr = IPAddress.Parse("192.168.1.100");
                     //如果txtIP里面有值，就选择填入的IP作为服务器IP，不填的话就默认是本机的
-                  
+
                     endPoint = new IPEndPoint(ipadr, 8080);     //IPAddress.loopback是本地环回接口，其实是虚拟接口，物理不存在的  
 
 
@@ -89,7 +87,7 @@ namespace chatRoomServer
 
                     //但是这里的bind不是上面的bind，是.NET里面的一个bind，使 Socket 与一个本地终结点相关联。 命名空间:System.Net.Sockets  程序集:System（在 system.dll 中）
                     //给套接字绑定一个端点，其实差不多用上面的那种bind也能实现
-                  
+
                     //10.127.221.248
                     try
                     {
@@ -133,7 +131,7 @@ namespace chatRoomServer
                             serverSocket.Close();
                             thStartListen.Abort();  //将监听进程关掉
 
-                            BroadCast.PushMessage("Server has closed", "", false, clientList);
+                            BroadCast.PushMessage("Server has closed", "", "", clientList, MessageType.ServerClose);
                             foreach (var socket in clientList.Values)
                             {
                                 socket.Close();
@@ -142,13 +140,13 @@ namespace chatRoomServer
 
                             serverSocket = null;
                             isListen = false;
-                           
+
                         }
                     }
 
 
                 }
-                catch(SocketException ex)
+                catch (SocketException ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
@@ -159,17 +157,17 @@ namespace chatRoomServer
 
 
         //线程函数，封装一个建立连接的通信套接字
-        private  void StartListen()
+        private void StartListen()
         {
             isListen = true;
             //default()只是设置为一个初始值，这里应该为null  
-            Socket clientSocket = default(Socket);      
+            Socket clientSocket = default(Socket);
 
             while (isListen)
             {
                 try
                 {
-                    
+
                     //  int accept(int sockfd, void *addr, int *addrlen); 
                     //注意这个serverSocket，它是用来监听的套接字，当有用户连接上端口后会返回一个新的套接字也就是这里的clientSocket，sercerSocket还是在那儿继续监听的
                     //返回值是一个新的套接字描述符，它代表的是和客户端的新的连接，这个socket相当于一个客户端的socket，包含的是客户端的ip和port
@@ -187,7 +185,7 @@ namespace chatRoomServer
 
                 //TCP是面向字节流的
                 Byte[] bytesFrom = new Byte[4096];
-                String dataFromClient = null;
+                // String dataFromClient = null;
 
                 if (clientSocket != null && clientSocket.Connected)
                 {
@@ -203,7 +201,8 @@ namespace chatRoomServer
 
                         if (len > -1)
                         {
-                            String tmp = Encoding.UTF8.GetString(bytesFrom, 0, len);  //将字节流转换成字符串
+                            var msg = (Packet)ByteHelper.Deserialize(bytesFrom);
+                            //String tmp = Encoding.UTF8.GetString(bytesFrom, 0, len);  //将字节流转换成字符串
                             /*try
                             {
                                 dataFromClient = EncryptionAndDecryption.TripleDESDecrypting(tmp);      //数据加密传输
@@ -216,37 +215,39 @@ namespace chatRoomServer
                             {
 
                             }*/
-                            dataFromClient = tmp;
-                            Int32 sublen = dataFromClient.LastIndexOf("$");
-                            if (sublen > -1)
+
+                            if (msg != null && !clientList.ContainsKey(msg.ChatAcount))
                             {
-                                dataFromClient = dataFromClient.Substring(0, sublen);   //获取用户名
+                                clientList.Add(msg.ChatAcount, clientSocket);   //如果用户名不存在，则添加用户名进去
 
-                                if (!clientList.ContainsKey(dataFromClient))
+                                //BroadCast是下面自己定义的一个类，是用来将消息对所有用户进行推送的
+                                //PushMessage(String msg, String uName, Boolean flag, Dictionary<String, Socket> clientList)
+                                BroadCast.PushMessage("Joined", msg.come, "", clientList, MessageType.Login);
+
+                                //HandleClient也是一个自己定义的类，用来负责接收客户端发来的消息并转发给所有的客户端
+                                //StartClient(Socket inClientSocket, String clientNo, Dictionary<String, Socket> cList)
+                                HandleClient client = new HandleClient(txtMsg);
+
+                                client.StartClient(clientSocket, msg.ChatAcount, clientList);
+
+                                txtMsg.BeginInvoke(new Action(() =>
                                 {
-                                    clientList.Add(dataFromClient, clientSocket);   //如果用户名不存在，则添加用户名进去
-
-                                    //BroadCast是下面自己定义的一个类，是用来将消息对所有用户进行推送的
-                                    //PushMessage(String msg, String uName, Boolean flag, Dictionary<String, Socket> clientList)
-                                    BroadCast.PushMessage(dataFromClient + "Joined", dataFromClient, false, clientList);
-
-                                    //HandleClient也是一个自己定义的类，用来负责接收客户端发来的消息并转发给所有的客户端
-                                    //StartClient(Socket inClientSocket, String clientNo, Dictionary<String, Socket> cList)
-                                    HandleClient client = new HandleClient(txtMsg);
-
-                                    client.StartClient(clientSocket, dataFromClient, clientList);
-
-                                    txtMsg.BeginInvoke(new Action(() =>
-                                    {
-                                        txtMsg.Text += dataFromClient + "连接上了服务器\r" + DateTime.Now + "\r\n";
-                                    }));
-                                }
-                                else
-                                {
-                                    //用户名已经存在
-                                    clientSocket.Send(Encoding.UTF8.GetBytes("#" + dataFromClient + "#"));
-                                }
+                                    txtMsg.Text += msg.ChatAcount + "连接上了服务器\r" + DateTime.Now + "\r\n";
+                                }));
                             }
+                            else
+                            {
+                                //用户名已经存在
+                               // clientSocket.Send(Encoding.UTF8.GetBytes("#" + msg.ChatAcount + "#"));
+                            }
+                            //dataFromClient = tmp;
+                            //Int32 sublen = dataFromClient.LastIndexOf("$");
+                            //if (sublen > -1)
+                            //{
+                            //    dataFromClient = dataFromClient.Substring(0, sublen);   //获取用户名
+
+
+                            //}
                         }
                     }
                     catch (Exception ep)
@@ -262,7 +263,7 @@ namespace chatRoomServer
         }
 
 
-    
+
 
 
 
@@ -274,17 +275,17 @@ namespace chatRoomServer
             {
                 serverSocket.Close();
                 thStartListen.Abort();  //将监听进程关掉
-                
-                BroadCast.PushMessage("Server has closed", "", false, clientList);
+
+                BroadCast.PushMessage("Server has closed", "", "", clientList, MessageType.ServerClose);
                 foreach (var socket in clientList.Values)
                 {
                     socket.Close();
                 }
                 clientList.Clear();
-                
+
                 serverSocket = null;
                 isListen = false;
-                txtMsg.Text += "服务停止，断开所有客户端连接\t"+DateTime.Now.ToString()+"\r\n";
+                txtMsg.Text += "服务停止，断开所有客户端连接\t" + DateTime.Now.ToString() + "\r\n";
             }
         }
 
@@ -293,10 +294,10 @@ namespace chatRoomServer
             try
             {
                 clientList = new Dictionary<string, Socket>();
-                serverSocket = new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);//实例，监听套接字
-                //IPAddress ipadr = IPAddress.Parse("192.168.1.100");
-         
-                endPoint = new IPEndPoint(ipadr,8080);//端点
+                serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);//实例，监听套接字
+                                                                                                           //IPAddress ipadr = IPAddress.Parse("192.168.1.100");
+
+                endPoint = new IPEndPoint(ipadr, 8080);//端点
                 serverSocket.Bind(endPoint);//绑定
                 serverSocket.Listen(100);   //设置最大连接数
                 thStartListen = new Thread(StartListen);
@@ -307,7 +308,8 @@ namespace chatRoomServer
                     txtMsg.Text += "服务启动成功...\r\n";
                 }
                 ));
-                labIPnow.BeginInvoke(new Action(() => {
+                labIPnow.BeginInvoke(new Action(() =>
+                {
                     labIPnow.Text = endPoint.Address.ToString();
                 }));
             }
@@ -321,7 +323,7 @@ namespace chatRoomServer
         {
             if (serverSocket != null)
             {
-                BroadCast.PushMessage("Server has closed", "", false, clientList);
+                BroadCast.PushMessage("Server has closed", "", "", clientList, MessageType.ServerClose);
                 foreach (var socket in clientList.Values)
                 {
                     socket.Close();
@@ -338,38 +340,38 @@ namespace chatRoomServer
         //重置监听的IP地址
         private void btnResetIp_Click(object sender, EventArgs e)
         {
-            
-                //如果txtIP里面有值，就选择填入的IP作为服务器IP，不填的话就默认是本机的
-                if (!String.IsNullOrWhiteSpace(txtIP.Text.ToString().Trim()))
+
+            //如果txtIP里面有值，就选择填入的IP作为服务器IP，不填的话就默认是本机的
+            if (!String.IsNullOrWhiteSpace(txtIP.Text.ToString().Trim()))
+            {
+                try
                 {
-                    try
+                    ipadr = IPAddress.Parse(txtIP.Text.ToString().Trim());
+                    btnStop_Click(sender, e);
+                    txtMsg.BeginInvoke(new Action(() =>
                     {
-                        ipadr = IPAddress.Parse(txtIP.Text.ToString().Trim());
-                        btnStop_Click(sender, e);
-                        txtMsg.BeginInvoke(new Action(() =>
-                        {
-                            txtMsg.Text += "服务器重启中，请稍候...\r\n";
-                        }));
+                        txtMsg.Text += "服务器重启中，请稍候...\r\n";
+                    }));
 
-                        btnStart_Click(sender, e);
+                    btnStart_Click(sender, e);
 
 
-                        labIPnow.BeginInvoke(new Action(() =>
-                        {
-                            labIPnow.Text = endPoint.Address.ToString();
-                        }));
-                    }
-                    catch (Exception ep)
+                    labIPnow.BeginInvoke(new Action(() =>
                     {
-                        MessageBox.Show("请输入正确的IP后重试");
-                    }
+                        labIPnow.Text = endPoint.Address.ToString();
+                    }));
                 }
-                else
+                catch (Exception ep)
                 {
-                    MessageBox.Show("请输入重置后的IP地址后重试！");
+                    MessageBox.Show("请输入正确的IP后重试");
                 }
-            
-            
+            }
+            else
+            {
+                MessageBox.Show("请输入重置后的IP地址后重试！");
+            }
+
+
         }
 
         private void btnRcv_Click(object sender, EventArgs e)
@@ -414,12 +416,12 @@ namespace chatRoomServer
         Dictionary<String, Socket> clientList = new Dictionary<string, Socket>();
         TextBox txtMsg;
         public HandleClient() { }
-        public HandleClient(TextBox tb) 
+        public HandleClient(TextBox tb)
         {
             txtMsg = tb;
         }
 
-        
+
         public void StartClient(Socket inClientSocket, String clientNo, Dictionary<String, Socket> cList)
         {
             clientSocket = inClientSocket;
@@ -434,7 +436,7 @@ namespace chatRoomServer
         private void Chat()
         {
             Byte[] bytesFromClient = new Byte[4096];
-            String dataFromClient;
+           // String dataFromClient;
             String msgTemp = null;
             Byte[] bytesSend = new Byte[4096];
             Boolean isListen = true;
@@ -452,26 +454,27 @@ namespace chatRoomServer
                         Int32 len = clientSocket.Receive(bytesFromClient);
                         if (len > -1)
                         {
-                            dataFromClient = Encoding.UTF8.GetString(bytesFromClient, 0, len);
-                            if (!String.IsNullOrWhiteSpace(dataFromClient))
+                            var msg = (Packet)ByteHelper.Deserialize(bytesFromClient);
+                           // dataFromClient = Encoding.UTF8.GetString(bytesFromClient, 0, len);
+                            if (msg!=null)
                             {
-                                dataFromClient = dataFromClient.Substring(0, dataFromClient.LastIndexOf("$"));   //这里的dataFromClient是消息内容，上面的是用户名
-                                if (!String.IsNullOrWhiteSpace(dataFromClient))
-                                {
-                                    BroadCast.PushMessage(dataFromClient, clNo, true, clientList);
-                                    msgTemp = clNo + ":" + dataFromClient + "\t\t" + DateTime.Now.ToString();
+                                if(!String.IsNullOrWhiteSpace(msg.ChatMessage))
+                                {   
+                                    BroadCast.PushMessage(msg.ChatMessage, msg.come, msg.to, clientList, MessageType.Message);
+                                    msgTemp = msg.come + ":" + msg.ChatMessage + "\t\t" + DateTime.Now.ToString();
                                     String newMsg = msgTemp;
                                     File.AppendAllText("E:\\MessageRecords.txt", newMsg + "\r\n", Encoding.UTF8);
                                 }
-                                else
+                               /* dataFromClient = dataFromClient.Substring(0, dataFromClient.LastIndexOf("$"));   //这里的dataFromClient是消息内容，上面的是用*/
+                                if(msg.DataID==MessageType.Logout)
                                 {
                                     isListen = false;
                                     clientList.Remove(clNo);
                                     txtMsg.BeginInvoke(new Action(() =>
                                     {
-                                        txtMsg.Text += clNo+ "已断开与服务器连接\r" + DateTime.Now + "\r\n";
+                                        txtMsg.Text += clNo + "已断开与服务器连接\r" + DateTime.Now + "\r\n";
                                     }));
-                                    BroadCast.PushMessage(clNo + "已下线\r","",false,clientList);
+                                    BroadCast.PushMessage("已下线\r", msg.come, "", clientList, MessageType.Logout);
                                     clientSocket.Close();
                                     clientSocket = null;
                                 }
@@ -485,10 +488,10 @@ namespace chatRoomServer
                     isListen = false;
                     clientList.Remove(clNo);
 
-                    
+
                     clientSocket.Close();
                     clientSocket = null;
-                    File.AppendAllText("E:\\Exception.txt",e.ToString()+"\r\nChat\r\n"+DateTime.Now.ToString()+"\r\n");
+                    File.AppendAllText("E:\\Exception.txt", e.ToString() + "\r\nChat\r\n" + DateTime.Now.ToString() + "\r\n");
                 }
             }
 
@@ -500,35 +503,64 @@ namespace chatRoomServer
     public class BroadCast
     {
         //flag是用来判断传进来的msg前面是否需要加上uName:，也就是判断是不是系统信息，是系统信息的话就设置flag为false
-        public static void PushMessage(String msg, String uName, Boolean flag, Dictionary<String, Socket> clientList)
+        public static void PushMessage(String msg, String cName, string tName, Dictionary<String, Socket> clientList, MessageType msgType)
         {
-            foreach (var item in clientList)
+            Packet sendData = new Packet();
+            switch (msgType)
             {
-                Socket brdcastSocket = (Socket)item.Value;
-                String msgTemp = null;
-                Byte[] castBytes = new Byte[4096];
-                if (flag == true)
+                case MessageType.ServerClose:
+                    sendData.come = "server";
+                    break;
+                case MessageType.Login:
+                case MessageType.Logout:
+                case MessageType.Message:
+                    sendData.come = cName;
+                    break;
+            }
+            sendData.DataID = msgType;
+            sendData.DataID = MessageType.Logout;
+            sendData.ChatMessage = msg;
+            byte[] data = ByteHelper.Serialize(sendData);
+            if (string.IsNullOrWhiteSpace(tName))
+            {
+                foreach (var item in clientList)
                 {
-                    msgTemp = uName + ":" + msg + "\t\t" + DateTime.Now.ToString();
-                    castBytes = Encoding.UTF8.GetBytes(msgTemp);
-                }
-                else
-                {
-                    msgTemp = msg + "\t\t" + DateTime.Now.ToString();
-                    castBytes = Encoding.UTF8.GetBytes(msgTemp);
-                }
-                try
-                {
-                    brdcastSocket.Send(castBytes);
-                }
-                catch (Exception e)
-                {
-                    brdcastSocket.Close();
-                    brdcastSocket = null;
-                    File.AppendAllText("E:\\Exception.txt",e.ToString()+"\r\nPushMessage\r\n"+DateTime.Now.ToString()+"\r\n");
-                    continue;
+                    Socket brdcastSocket = (Socket)item.Value;
+                    //String msgTemp = null;
+                    //Byte[] castBytes = new Byte[4096];
+                    try
+                    {
+                        brdcastSocket.Send(data);
+                    }
+                    catch (Exception e)
+                    {
+                        brdcastSocket.Close();
+                        brdcastSocket = null;
+                        File.AppendAllText("E:\\Exception.txt", e.ToString() + "\r\nPushMessage\r\n" + DateTime.Now.ToString() + "\r\n");
+                        continue;
+                    }
                 }
             }
+            else
+            {
+                var toClient = clientList[tName];
+                if (toClient != null)
+                {
+                    Socket brdcastSocket = (Socket)toClient;
+                    try
+                    {
+
+                        brdcastSocket.Send(data);
+                    }
+                    catch (Exception e)
+                    {
+                        toClient.Close();
+                        brdcastSocket = null;
+                        File.AppendAllText("E:\\Exception.txt", e.ToString() + "\r\nPushMessage\r\n" + DateTime.Now.ToString() + "\r\n");
+                    }
+                }
+            }
+
         }
     }
 

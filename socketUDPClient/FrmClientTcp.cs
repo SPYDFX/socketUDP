@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Common;
+using model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,13 +16,23 @@ namespace socketUDPClient
     public partial class FrmClientTcp : Form
     {
         private int startX, startY;
+        private Socket skt;
+        private string friendName;
+        private string frend;
+        private string user;
         public FrmClientTcp()
         {
             InitializeComponent();
         }
-        public FrmClientTcp(string account,string cname)
+        public FrmClientTcp(string frend,string friendName,string user, Socket skt)
         {
-
+            InitializeComponent();
+            this.skt = skt;
+            this.friendName = friendName;
+            this.frend = frend;
+            this.user = user;
+            lblFriendName.Text = friendName;
+           
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -34,7 +47,18 @@ namespace socketUDPClient
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-
+            if(!string.IsNullOrWhiteSpace(txtSendMsg.Text))
+            {
+                Packet sendData = new Packet();
+                sendData.ChatAcount = this.user;
+                sendData.to = this.frend;
+                sendData.come = this.user;
+                sendData.DataID = MessageType.Message;
+                sendData.ChatMessage = txtSendMsg.Text;
+                byte[] data = ByteHelper.Serialize(sendData);
+                skt.Send(data);
+            }
+           
         }
         public void DisplayMessage(string message)
         {

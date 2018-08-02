@@ -26,7 +26,9 @@ namespace socketUDPClient
         private List<UserInfo> offLineUserList;
         private ListView listOnLine;
         private ListView listOffLine;
+
         private Dictionary<string,FrmClientTcp> dicChatFrm = new Dictionary<string, FrmClientTcp>();//用来记录打开窗体对象
+
         Socket clientSocket = null;
         static Boolean isListen = true;
         Thread thDataFromServer;
@@ -53,6 +55,7 @@ namespace socketUDPClient
             this.account = account;
             InitializeBaseInfo();
             InitializeUserList();
+            LinkServer();//连接服务器
         }
 
         private void FrmUserList_MouseDown(object sender, MouseEventArgs e)
@@ -170,17 +173,17 @@ namespace socketUDPClient
                     var txt = listOnLine.SelectedItems[0].Text;
                     // MessageBox.Show(txt);
                     var cName = txt.Split('-').ToList()[0];
-                    var accout = txt.Split('-').ToList()[1];
-                    if (!dicChatFrm.Keys.Contains(accout))
+                    var cAccount = txt.Split('-').ToList()[1];
+                    if (!dicChatFrm.Keys.Contains(cAccount))
                     {
-                        FrmClientTcp chatClient = new FrmClientTcp(cName, accout);
+                        FrmClientTcp chatClient = new FrmClientTcp(cAccount, cName, this.account, clientSocket);
                         chatClient.Show();
-                        chatClient.Closed += (s, args) => this.RemoveFrm(accout);
-                        dicChatFrm.Add(accout, chatClient);
+                        chatClient.Closed += (s, args) => this.RemoveFrm(cAccount);
+                        dicChatFrm.Add(cAccount, chatClient);
                     }
                     else
                     {
-                        var frm = dicChatFrm[accout];
+                        var frm = dicChatFrm[cAccount];
                         frm.Show();
                     }
 
@@ -200,6 +203,9 @@ namespace socketUDPClient
         {
             dicChatFrm.Remove(key);
         }
+        /// <summary>
+        /// 连接服务器
+        /// </summary>
         public void LinkServer()
         {
             if (clientSocket == null || !clientSocket.Connected)
@@ -222,15 +228,13 @@ namespace socketUDPClient
                         {
                             if (clientSocket != null && clientSocket.Connected)
                             {
-                                Byte[] bytesSend = new Byte[4096];
                                 Packet sendData = new Packet();
                                 sendData.ChatName = this.uname;
                                 sendData.ChatAcount = this.account;
+                                sendData.come = this.account;
                                 sendData.DataID = MessageType.Login;
                                 byte[] data = ByteHelper.Serialize(sendData);
                                 clientSocket.Send(data);
-                                //txtName.Enabled = false;    //设置为不能再改名字了
-                                //txtSendMsg.Focus();         //将焦点放在
                                 thDataFromServer = new Thread(DataFromServer);
                                 thDataFromServer.IsBackground = true;
                                 thDataFromServer.Start();
@@ -292,18 +296,45 @@ namespace socketUDPClient
                 isListen = false;
                 if (clientSocket != null && clientSocket.Connected)
                 {
+                    //Byte[] bytesSend = new Byte[4096];
+                    Packet sendData = new Packet();
+                    sendData.ChatName = this.uname;
+                    sendData.ChatAcount = this.account;
+                    sendData.DataID = MessageType.Logout;
+                    byte[] data = ByteHelper.Serialize(sendData);
+                    clientSocket.Send(data);
                     //没有在客户端关闭连接，而是给服务器发送一个消息，在服务器端关闭连接
                     //这样可以将异常的处理放到服务器。客户端关闭会让客户端和服务器都抛异常
-                    clientSocket.Send(Encoding.UTF8.GetBytes("$"));
+                  
                     MessageBox.Show(ex.ToString());
                 }
             }
         }
 
-        private void ShowMsg(String msg,string come)
+        private void ShowMsg(String msg,string frendAcount)
         {
-            dicChatFrm[come].DisplayMessage(msg);
-            dicChatFrm[come].Show();
+            if(dicChatFrm.Keys.Contains(frendAcount))
+            {
+                dicChatFrm[frendAcount].DisplayMessage(msg);
+                dicChatFrm[frendAcount].Show();
+            }
+            else
+            {
+                var friend = onLineUserList.Where(s => s.userAccount == frendAcount).FirstOrDefault();
+                if(friend == null)
+                {
+                    friend = offLineUserList.Where(s => s.userAccount == frendAcount).FirstOrDefault();
+                }
+                if(friend != null)
+                {
+                    FrmClientTcp frmtcp = new FrmClientTcp(frendAcount, friend.userName, account, clientSocket);
+                    frmtcp.DisplayMessage(msg);
+                    frmtcp.Show();
+                    dicChatFrm.Add(frendAcount, frmtcp);
+                }
+              
+            }
+            
         }
     }
 }

@@ -34,3 +34,17 @@ C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomServ
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Form1.resources
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Properties.Resources.resources
 C:\Users\yinzemin\Downloads\chatRoomTest-master\chatRoomTest-master\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csproj.GenerateResource.Cache
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csprojResolveAssemblyReference.cache
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Form1.resources
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Properties.Resources.resources
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csproj.GenerateResource.Cache
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csproj.CoreCompileInputs.cache
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.exe
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.pdb
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.exe.config
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.exe
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.pdb
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\Common.dll
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\model.dll
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\Common.pdb
+D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\model.pdb

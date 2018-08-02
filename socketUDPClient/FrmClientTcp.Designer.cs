@@ -43,6 +43,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblFriendName = new System.Windows.Forms.Label();
             this.plHeader.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +62,7 @@
             // plHeader
             // 
             this.plHeader.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.plHeader.Controls.Add(this.lblFriendName);
             this.plHeader.Controls.Add(this.lblChatName);
             this.plHeader.Controls.Add(this.btnClose);
             this.plHeader.Controls.Add(this.btnMin);
@@ -235,6 +237,14 @@
             this.panel2.Size = new System.Drawing.Size(1, 535);
             this.panel2.TabIndex = 19;
             // 
+            // lblFriendName
+            // 
+            this.lblFriendName.AutoSize = true;
+            this.lblFriendName.Location = new System.Drawing.Point(320, 15);
+            this.lblFriendName.Name = "lblFriendName";
+            this.lblFriendName.Size = new System.Drawing.Size(0, 18);
+            this.lblFriendName.TabIndex = 10;
+            // 
             // FrmClientTcp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -279,5 +289,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblFriendName;
     }
 }
