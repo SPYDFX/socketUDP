@@ -58,7 +58,12 @@ namespace socketUDPClient
             if(model!=null)
             {
                 string strWhere = string.Format("uAccount='{0}'", model.userAccount);
-                string strSet = string.Format("online={0},ipAddress='{1}'", model.onLine,model.ipAddress);
+                
+                string strSet = string.Format("online={0}", model.onLine);
+                if(!string.IsNullOrWhiteSpace(model.ipAddress))
+                {
+                    strSet+= string.Format(",ipAddress='{0}'",  model.ipAddress);
+                }
                 result=DbHelper.UpdateTableByCondition("userinfo", strWhere, strSet);
             }
             return result;

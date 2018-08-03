@@ -68,9 +68,9 @@ namespace socketUDPClient
             if (!string.IsNullOrWhiteSpace(txtSendMsg.Text))
             {
                 Packet sendData = new Packet();
-                sendData.ChatName = this.userName;
-                sendData.ChatMessage = txtSendMsg.Text;
-                sendData.DataID = MessageType.Message;
+                sendData.comeName = this.userName;
+                sendData.msg = txtSendMsg.Text;
+                sendData.type = MessageType.Message;
                 byte[] byteData = ByteHelper.Serialize(sendData);//sendData.GetDataStream();
                 clientSocket.BeginSendTo(byteData, 0, byteData.Length, SocketFlags.None, serverEndPoint, new AsyncCallback(this.SendData), null);
                 txtSendMsg.Text = String.Empty;
@@ -84,8 +84,8 @@ namespace socketUDPClient
             if(!string.IsNullOrWhiteSpace(this.userName)&& serverEndPoint!=null)
             {
                 Packet sendData = new Packet();
-                sendData.ChatName = this.userName;
-                sendData.DataID = MessageType.Login;
+                sendData.comeName = this.userName;
+                sendData.type = MessageType.Login;
                 byte[] data = ByteHelper.Serialize(sendData);//sendData.GetDataStream();
                 clientSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, serverEndPoint, new AsyncCallback(this.SendData), null);
                 
@@ -112,13 +112,13 @@ namespace socketUDPClient
 
             // Packet receivedData = new Packet(this.dataStream);
             Packet receivedData =(Packet)ByteHelper.Deserialize(this.dataStream);
-            if (receivedData.DataID == MessageType.Login)
+            if (receivedData.type == MessageType.Login)
             {
                 //lstUser.Items.Add(receivedData.ChatName);
             }
 
-            if (receivedData.ChatMessage != null)
-                this.Invoke(this.displayMessageDelegate, new object[] { receivedData.ChatMessage });
+            if (receivedData.msg != null)
+                this.Invoke(this.displayMessageDelegate, new object[] { receivedData.msg });
 
             this.dataStream = new byte[1024];
 

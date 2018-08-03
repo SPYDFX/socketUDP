@@ -154,6 +154,7 @@
     <Content Include="Images\pic.png" />
     <Content Include="Images\pwd.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\shake.png" />
     <Content Include="Images\wenjian.png" />
     <None Include="Resources\hz.jpg" />
     <None Include="Resources\微信图片_20170517223918.jpg" />

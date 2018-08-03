@@ -45,5 +45,22 @@ namespace socketUDPClient
         {
             return dal.GetUserList();
         }
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
+        public int LoginOut(string account)
+        {
+            int result = 0;
+            if (!string.IsNullOrWhiteSpace(account))
+            {
+                UserInfo u = new UserInfo();
+                u.userAccount = account;
+                u.onLine = 0;
+                result= dal.UpdateUserInfoLogin(u);
+            }
+            return result;
+        }
     }
 }

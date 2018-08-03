@@ -65,23 +65,23 @@ namespace socketUDP
 
             serverSocket.EndReceiveFrom(asyncResult, ref senderEndPoint);
 
-            sendData.DataID = receivedData.DataID;
-            sendData.ChatName = receivedData.ChatName;
+            sendData.type = receivedData.type;
+            sendData.comeName = receivedData.comeName;
 
-            switch (receivedData.DataID)
+            switch (receivedData.type)
             {
                 case MessageType.Message:
-                    sendData.ChatMessage = receivedData.ChatName + ": " + receivedData.ChatMessage;
+                    sendData.msg = receivedData.comeName + ": " + receivedData.msg;
                     break;
 
                 case MessageType.Login:
                     Client client = new Client();
                     client.endPoint = senderEndPoint;
-                    client.name = receivedData.ChatName;
+                    client.name = receivedData.comeName;
 
                     this.clientList.Add(client);
 
-                    sendData.ChatMessage = "--- " + receivedData.ChatName + " has logged in ---";
+                    sendData.msg = "--- " + receivedData.comeName + " has logged in ---";
                     lstBox.Items.Add(client.name + "上线；（IP地址：" + client.endPoint + ")");
                     break;
 
@@ -95,7 +95,7 @@ namespace socketUDP
                         }
                     }
 
-                    sendData.ChatMessage = "--- " + receivedData.ChatName + " has logged out ---";
+                    sendData.msg = "--- " + receivedData.comeName + " has logged out ---";
                     break;
             }
 
@@ -103,7 +103,7 @@ namespace socketUDP
 
             foreach (Client client in this.clientList)
             {
-                if (client.endPoint != senderEndPoint || sendData.DataID != MessageType.Login)
+                if (client.endPoint != senderEndPoint || sendData.type != MessageType.Login)
                 {
                     serverSocket.BeginSendTo(data, 0, data.Length, SocketFlags.None, client.endPoint, new AsyncCallback(this.SendData), client.endPoint);
                 }
@@ -112,7 +112,7 @@ namespace socketUDP
             serverSocket.BeginReceiveFrom(this.dataStream, 0, this.dataStream.Length, SocketFlags.None, ref senderEndPoint, new AsyncCallback(this.ReceiveData), senderEndPoint);
 
             //this.Invoke(this.updateStatusDelegate, new object[] { sendData.ChatMessage });
-            showmsg(sendData.ChatMessage);
+            showmsg(sendData.msg);
         }
         private void SendData(IAsyncResult asyncResult)
         {

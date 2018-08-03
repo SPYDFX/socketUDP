@@ -27,12 +27,12 @@ namespace socketUDPClient
         private ListView listOnLine;
         private ListView listOffLine;
 
-        private Dictionary<string,FrmClientTcp> dicChatFrm = new Dictionary<string, FrmClientTcp>();//用来记录打开窗体对象
+        private Dictionary<string, FrmClientTcp> dicChatFrm = new Dictionary<string, FrmClientTcp>();//用来记录打开窗体对象
 
         Socket clientSocket = null;
         static Boolean isListen = true;
         Thread thDataFromServer;
-        
+
         public IPAddress serverIP
         {
             get
@@ -70,6 +70,20 @@ namespace socketUDPClient
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+
+            if (clientSocket != null && clientSocket.Connected)
+            {
+                thDataFromServer.Abort();
+                Packet sendData = new Packet();
+                sendData.comeName = this.uname;
+                sendData.comeNo = this.account;
+                sendData.type = MessageType.Logout;
+                byte[] data = ByteHelper.Serialize(sendData);
+                clientSocket.Send(data);
+                clientSocket.Close();
+                clientSocket = null;
+                bll.LoginOut(this.account);
+            }
             this.Close();
         }
 
@@ -144,7 +158,9 @@ namespace socketUDPClient
                     ListViewItem lvi = new ListViewItem();
                     lvi.ImageIndex = 1;
                     lvi.Text = u.userName + "-" + u.userAccount;
+                    lvi.Name = u.userAccount;
                     list.Items.Add(lvi);
+
                 }
                 //var u = userList[0];
                 //for (int i=0;i<15;i++)
@@ -166,24 +182,31 @@ namespace socketUDPClient
 
         private void MouseEvent(object sender, MouseEventArgs e)
         {
-            if(listOnLine.Visible)
+            if (listOnLine.Visible)
             {
                 if (listOnLine.SelectedItems.Count > 0)
                 {
-                    var txt = listOnLine.SelectedItems[0].Text;
-                    // MessageBox.Show(txt);
-                    var cName = txt.Split('-').ToList()[0];
-                    var cAccount = txt.Split('-').ToList()[1];
-                    if (!dicChatFrm.Keys.Contains(cAccount))
+                    //var txt = listOnLine.SelectedItems[0].Name;
+                    //// MessageBox.Show(txt);
+                    var chatName = listOnLine.SelectedItems[0].Text;
+                    var chatNo = listOnLine.SelectedItems[0].Name;
+                    if (!dicChatFrm.Keys.Contains(chatNo))
                     {
-                        FrmClientTcp chatClient = new FrmClientTcp(cAccount, cName, this.account, clientSocket);
+                        Chat ct = new Chat()
+                        {
+                            userNo = this.account,
+                            userName = this.uname,
+                            chatName = chatName,
+                            chatNo = chatNo,
+                        };
+                        FrmClientTcp chatClient = new FrmClientTcp(ct, clientSocket);
                         chatClient.Show();
-                        chatClient.Closed += (s, args) => this.RemoveFrm(cAccount);
-                        dicChatFrm.Add(cAccount, chatClient);
+                        chatClient.Closed += (s, args) => this.RemoveFrm(chatNo);
+                        dicChatFrm.Add(chatNo, chatClient);
                     }
                     else
                     {
-                        var frm = dicChatFrm[cAccount];
+                        var frm = dicChatFrm[chatNo];
                         frm.Show();
                     }
 
@@ -194,10 +217,10 @@ namespace socketUDPClient
                 if (listOffLine.SelectedItems.Count > 0)
                 {
                     var txt = listOffLine.SelectedItems[0].Text;
-                   // MessageBox.Show(txt);
+                    // MessageBox.Show(txt);
                 }
             }
-           
+
         }
         public void RemoveFrm(string key)
         {
@@ -229,10 +252,9 @@ namespace socketUDPClient
                             if (clientSocket != null && clientSocket.Connected)
                             {
                                 Packet sendData = new Packet();
-                                sendData.ChatName = this.uname;
-                                sendData.ChatAcount = this.account;
-                                sendData.come = this.account;
-                                sendData.DataID = MessageType.Login;
+                                sendData.comeName = this.uname;
+                                sendData.comeNo = this.account;
+                                sendData.type = MessageType.Login;
                                 byte[] data = ByteHelper.Serialize(sendData);
                                 clientSocket.Send(data);
                                 thDataFromServer = new Thread(DataFromServer);
@@ -253,7 +275,7 @@ namespace socketUDPClient
             }
             else
             {
-               // MessageBox.Show("你已经连接上服务器了");
+                // MessageBox.Show("你已经连接上服务器了");
             }
         }
 
@@ -268,10 +290,10 @@ namespace socketUDPClient
                     Int32 len = clientSocket.Receive(bytesFrom);
 
                     Packet receivedData = (Packet)ByteHelper.Deserialize(bytesFrom);
-                    if (receivedData!=null)
+                    if (receivedData != null)
                     {
                         //如果收到服务器已经关闭的消息，那么就把客户端接口关了，免得出错，并在客户端界面上显示出来
-                        if (receivedData.DataID==MessageType.ServerClose)
+                        if (receivedData.type == MessageType.ServerClose)
                         {
                             clientSocket.Close();
                             clientSocket = null;
@@ -283,11 +305,57 @@ namespace socketUDPClient
                             thDataFromServer.Abort();   //这一句必须放在最后，不然这个进程都关了后面的就不会执行了
                             return;
                         }
-                        if(receivedData.DataID==MessageType.Message)
+                        if(receivedData.type==MessageType.Shake)
                         {
-                            ShowMsg(receivedData.ChatMessage,receivedData.come);
+                            ShowMsg(receivedData);
                         }
-                        
+                        if (receivedData.type == MessageType.Message)
+                        {
+                            ShowMsg(receivedData);
+                        }
+
+                        if (receivedData.type == MessageType.Login)
+                        {
+                            var user = offLineUserList.FirstOrDefault(u => u.userAccount == receivedData.comeNo);
+                            if (user != null)
+                            {
+                                onLineUserList.Add(user);
+                                offLineUserList.Remove(user);
+                                this.Invoke(new Action(() =>
+                                {
+                                    foreach (ListViewItem item in listOffLine.Items)
+                                    {
+                                        if (item.Name == user.userAccount)
+                                        {
+                                            listOffLine.Items.Remove(item);
+                                            listOnLine.Items.Add(item);
+                                        }
+                                    }
+                                }));
+                            }
+                        }
+
+                        if (receivedData.type == MessageType.Logout)
+                        {
+                            var user = onLineUserList.FirstOrDefault(u => u.userAccount == receivedData.comeNo);
+                            if (user != null)
+                            {
+                                offLineUserList.Add(user);
+                                onLineUserList.Remove(user);
+                                this.Invoke(new Action(() =>
+                                {
+                                    foreach (ListViewItem  item in listOnLine.Items)
+                                    {
+                                        if(item.Name==user.userAccount)
+                                        {
+                                            listOnLine.Items.Remove(item);
+                                            listOffLine.Items.Add(item);
+                                        }
+                                    }
+                                }));
+
+                            }
+                        }
                     }
                 }
             }
@@ -298,43 +366,67 @@ namespace socketUDPClient
                 {
                     //Byte[] bytesSend = new Byte[4096];
                     Packet sendData = new Packet();
-                    sendData.ChatName = this.uname;
-                    sendData.ChatAcount = this.account;
-                    sendData.DataID = MessageType.Logout;
+                    //sendData.comeName = this.uname;
+                    sendData.comeNo = this.account;
+                    sendData.type = MessageType.Logout;
                     byte[] data = ByteHelper.Serialize(sendData);
                     clientSocket.Send(data);
                     //没有在客户端关闭连接，而是给服务器发送一个消息，在服务器端关闭连接
                     //这样可以将异常的处理放到服务器。客户端关闭会让客户端和服务器都抛异常
-                  
                     MessageBox.Show(ex.ToString());
                 }
             }
         }
 
-        private void ShowMsg(String msg,string frendAcount)
+        private void ShowMsg(Packet pct)
         {
-            if(dicChatFrm.Keys.Contains(frendAcount))
+            var friend = onLineUserList.Where(s => s.userAccount == pct.comeNo).FirstOrDefault();
+            if (friend == null)
             {
-                dicChatFrm[frendAcount].DisplayMessage(msg);
-                dicChatFrm[frendAcount].Show();
+                friend = offLineUserList.Where(s => s.userAccount == pct.comeNo).FirstOrDefault();
             }
-            else
+            if (friend != null)
             {
-                var friend = onLineUserList.Where(s => s.userAccount == frendAcount).FirstOrDefault();
-                if(friend == null)
+                pct.comeName = friend.userName;
+                FrmClientTcp frmtcp = null;
+                if (dicChatFrm.Keys.Contains(pct.comeNo))
                 {
-                    friend = offLineUserList.Where(s => s.userAccount == frendAcount).FirstOrDefault();
+                    frmtcp=dicChatFrm[pct.comeNo];
+                    frmtcp.Invoke(new Action(() =>
+                    {
+                        frmtcp.DisplayMessage(pct.comeName, pct.msg);
+                        frmtcp.Show();
+                        if (pct.type == MessageType.Shake)
+                        {
+                            frmtcp.FrmShake();
+                        }
+                    }));
                 }
-                if(friend != null)
+                else
                 {
-                    FrmClientTcp frmtcp = new FrmClientTcp(frendAcount, friend.userName, account, clientSocket);
-                    frmtcp.DisplayMessage(msg);
-                    frmtcp.Show();
-                    dicChatFrm.Add(frendAcount, frmtcp);
+                    this.Invoke(new Action(() =>
+                    {
+                        Chat ct = new Chat()
+                        {
+                            userNo = this.account,
+                            userName = this.uname,
+                            chatName = pct.comeName,
+                            chatNo = pct.comeNo,
+
+                        };
+                        frmtcp = new FrmClientTcp(ct, clientSocket);
+                        frmtcp.Closed += (s, args) => this.RemoveFrm(pct.comeNo);
+                        dicChatFrm.Add(pct.comeNo, frmtcp);
+                        frmtcp.DisplayMessage(pct.comeName, pct.msg);
+                        frmtcp.Show();
+                        if (pct.type == MessageType.Shake)
+                        {
+                            frmtcp.FrmShake();
+                        }
+                    }));
                 }
-              
+               
             }
-            
         }
     }
 }

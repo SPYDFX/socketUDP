@@ -48,3 +48,16 @@ D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\Com
 D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\model.dll
 D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\Common.pdb
 D:\软件\develop\project\socketUDP2\chatRoomServer\chatRoomServer\bin\Debug\model.pdb
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.exe.config
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.exe
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\chatRoomServer.pdb
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\Common.dll
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\model.dll
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\Common.pdb
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\bin\Debug\model.pdb
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csprojResolveAssemblyReference.cache
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Form1.resources
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.Properties.Resources.resources
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.csproj.GenerateResource.Cache
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.exe
+G:\spydf\soft\socketUDP\chatRoomServer\chatRoomServer\obj\Debug\chatRoomServer.pdb

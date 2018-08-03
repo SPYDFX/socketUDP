@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,21 +18,17 @@ namespace socketUDPClient
     {
         private int startX, startY;
         private Socket skt;
-        private string friendName;
-        private string frend;
-        private string user;
+        private Chat ct;
         public FrmClientTcp()
         {
             InitializeComponent();
         }
-        public FrmClientTcp(string frend,string friendName,string user, Socket skt)
+        public FrmClientTcp(Chat chat, Socket skt)
         {
             InitializeComponent();
             this.skt = skt;
-            this.friendName = friendName;
-            this.frend = frend;
-            this.user = user;
-            lblFriendName.Text = friendName;
+            this.ct = chat;
+            lblFriendName.Text = ct.chatName;
            
         }
 
@@ -50,19 +47,29 @@ namespace socketUDPClient
             if(!string.IsNullOrWhiteSpace(txtSendMsg.Text))
             {
                 Packet sendData = new Packet();
-                sendData.ChatAcount = this.user;
-                sendData.to = this.frend;
-                sendData.come = this.user;
-                sendData.DataID = MessageType.Message;
-                sendData.ChatMessage = txtSendMsg.Text;
+                sendData.comeNo = ct.userNo;
+                sendData.toNo = ct.chatNo;
+                sendData.type = MessageType.Message;
+                sendData.msg = txtSendMsg.Text;
                 byte[] data = ByteHelper.Serialize(sendData);
                 skt.Send(data);
+                DisplayMessage(ct.userName,txtSendMsg.Text);
+                txtSendMsg.Text = "";
             }
            
         }
-        public void DisplayMessage(string message)
+        public void DisplayMessage(string comeName,string msg)
         {
-            lstMsg.Items.Add(message);
+            //this.WindowState = FormWindowState.Normal;
+            //if (this.WindowState == FormWindowState.Minimized)
+            //{
+            //    this.WindowState = FormWindowState.Normal;
+            //}
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                lstMsg.Items.Add(comeName + ":" + msg);
+            }
+            
         }
 
         private void FrmClientTcp_MouseMove(object sender, MouseEventArgs e)
@@ -98,6 +105,33 @@ namespace socketUDPClient
             {
                 startX = e.X;
                 startY = e.Y;
+            }
+        }
+
+        private void btnShake_Click(object sender, EventArgs e)
+        {
+            Packet sendData = new Packet();
+            sendData.comeNo = ct.userNo;
+            sendData.toNo = ct.chatNo;
+            sendData.type = MessageType.Shake;
+            byte[] data = ByteHelper.Serialize(sendData);
+            skt.Send(data);
+        }
+
+        public void FrmShake()
+        {
+            if(this.WindowState==FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                Thread.Sleep(1500);
+            }
+            for(int i=0;i<100;i++)
+            {
+                this.Top -= 10;
+                this.Left += 10;
+                Thread.Sleep(10);
+                this.Top += 10;
+                this.Left -= 10;
             }
         }
     }

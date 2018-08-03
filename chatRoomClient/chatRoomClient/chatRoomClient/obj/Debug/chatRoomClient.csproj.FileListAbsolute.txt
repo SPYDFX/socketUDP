@@ -35,3 +35,12 @@ D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClien
 D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csproj.CoreCompileInputs.cache
 D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.exe
 D:\软件\develop\project\socketUDP2\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.pdb
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.exe.config
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.exe
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\bin\Debug\chatRoomClient.pdb
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csprojResolveAssemblyReference.cache
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.Form1.resources
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.Properties.Resources.resources
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.csproj.GenerateResource.Cache
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.exe
+G:\spydf\soft\socketUDP\chatRoomClient\chatRoomClient\chatRoomClient\obj\Debug\chatRoomClient.pdb
