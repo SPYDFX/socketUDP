@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>chat.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SideBar, Version=1.0.2813.28543, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,8 +149,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chat.ico" />
     <Content Include="Images\account.png" />
     <Content Include="Images\bq.png" />
+    <Content Include="Images\chat.ico" />
     <Content Include="Images\close3.png" />
     <Content Include="Images\jianqie.png" />
     <Content Include="Images\min2.png" />

@@ -25,27 +25,7 @@ namespace socketUDPClient
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtUname.Text)&&!string.IsNullOrWhiteSpace(txtPwd.Text.Trim()))
-            {
-                UserInfo user = new UserInfo()
-                {
-                    userAccount = txtUname.Text,
-                    userPwd=txtPwd.Text
-                };
-
-               if( bll.Login(user))
-                {
-                    this.Hide();
-                    FrmUserList client = new FrmUserList(user.userAccount);
-                    client.Show();
-                    client.Closed += (s, args) => this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("登录失败");
-                }
-                
-            }
+            LoginEvent();
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -96,6 +76,47 @@ namespace socketUDPClient
             {
                 startX = e.X;
                 startY = e.Y;
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginEvent();
+            }
+        }
+
+        private void txtPwd_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginEvent();
+            }
+        }
+
+        private void LoginEvent()
+        {
+            if (!string.IsNullOrWhiteSpace(txtUname.Text) && !string.IsNullOrWhiteSpace(txtPwd.Text.Trim()))
+            {
+                UserInfo user = new UserInfo()
+                {
+                    userAccount = txtUname.Text,
+                    userPwd = txtPwd.Text
+                };
+
+                if (bll.Login(user))
+                {
+                    this.Hide();
+                    FrmUserList client = new FrmUserList(user.userAccount);
+                    client.Show();
+                    client.Closed += (s, args) => this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("登录失败");
+                }
+
             }
         }
     }

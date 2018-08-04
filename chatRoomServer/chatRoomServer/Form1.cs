@@ -451,9 +451,9 @@ namespace chatRoomServer
 
         private void Chat()
         {
-            Byte[] bytesFromClient = new Byte[4096];
+            byte[] bytesFromClient = new byte[4096];
             String msgTemp = null;
-            Byte[] bytesSend = new Byte[4096];
+            //Byte[] bytesSend = new Byte[4096];
             Boolean isListen = true;
 
             while (isListen)
@@ -466,10 +466,29 @@ namespace chatRoomServer
                     }
                     if (clientSocket.Available > 0)
                     {
-                        Int32 len = clientSocket.Receive(bytesFromClient);
-                        if (len > -1)
+                        MemoryStream stream = new MemoryStream();
+                        int len = 0;
+                        byte[] data = new byte[0];
+                        //Int32 
+                        // len = clientSocket.Receive(bytesFromClient);
+                        while (true)
                         {
-                            var pct = (Packet)ByteHelper.Deserialize(bytesFromClient);
+                            len = clientSocket.Receive(bytesFromClient, bytesFromClient.Length, SocketFlags.None);
+                            stream.Write(bytesFromClient, 0, len);
+                            byte[] tmp = new byte[data.Length + len];
+                            System.Buffer.BlockCopy(data, 0, tmp, 0, data.Length);
+                            System.Buffer.BlockCopy(bytesFromClient, 0, tmp, data.Length, len);
+                            data = tmp;
+                            if (len < bytesFromClient.Length)
+                            {
+                                break;
+                            }   
+                        }
+                        //if (stream.Length > 0)
+                        if (data.Length> 0)
+                        {
+                            //var data = ByteHelper.StreamToBytes(stream);
+                            var pct = (Packet)ByteHelper.Deserialize(data);
                            // dataFromClient = Encoding.UTF8.GetString(bytesFromClient, 0, len);
                             if (pct != null)
                             {

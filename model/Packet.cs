@@ -33,6 +33,10 @@ namespace model
         /// 消息接收者的名称
         /// </summary>
         public string toName { get; set; }
+        /// <summary>
+        /// 文件对象
+        /// </summary>
+        public byte[] file { get; set; }
          
     }
     public enum MessageType
@@ -57,6 +61,10 @@ namespace model
         /// 抖动
         /// </summary>
         Shake,
+        /// <summary>
+        /// 传输图片
+        /// </summary>
+        Img,
         Null
     }
 }

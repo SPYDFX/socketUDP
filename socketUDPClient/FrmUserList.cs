@@ -52,9 +52,15 @@ namespace socketUDPClient
         public FrmUserList(string account)
         {
             InitializeComponent();
+            //隐藏任务栏区图标
+            this.ShowInTaskbar = false;
+            //图标显示在托盘区
+           
             this.account = account;
             InitializeBaseInfo();
             InitializeUserList();
+            notify.Visible = true;
+            notify.Text = this.uname;
             LinkServer();//连接服务器
         }
 
@@ -65,12 +71,10 @@ namespace socketUDPClient
                 startX = e.X;
                 startY = e.Y;
             }
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-
             if (clientSocket != null && clientSocket.Connected)
             {
                 thDataFromServer.Abort();
@@ -85,11 +89,17 @@ namespace socketUDPClient
                 bll.LoginOut(this.account);
             }
             this.Close();
+
         }
 
         private void btnMin_Click(object sender, EventArgs e)
         {
+            
             this.WindowState = FormWindowState.Minimized;
+            ////隐藏任务栏区图标
+            //this.ShowInTaskbar = false;
+            ////图标显示在托盘区
+            //notify.Visible = true;
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
@@ -157,7 +167,7 @@ namespace socketUDPClient
                 {
                     ListViewItem lvi = new ListViewItem();
                     lvi.ImageIndex = 1;
-                    lvi.Text = u.userName + "-" + u.userAccount;
+                    lvi.Text = u.userName;
                     lvi.Name = u.userAccount;
                     list.Items.Add(lvi);
 
@@ -207,6 +217,10 @@ namespace socketUDPClient
                     else
                     {
                         var frm = dicChatFrm[chatNo];
+                        if(frm.WindowState==FormWindowState.Minimized)
+                        {
+                            frm.WindowState = FormWindowState.Normal;
+                        }
                         frm.Show();
                     }
 
@@ -286,7 +300,7 @@ namespace socketUDPClient
             {
                 while (isListen)
                 {
-                    Byte[] bytesFrom = new Byte[4096];
+                    byte[] bytesFrom = new byte[901196];
                     Int32 len = clientSocket.Receive(bytesFrom);
 
                     Packet receivedData = (Packet)ByteHelper.Deserialize(bytesFrom);
@@ -305,11 +319,7 @@ namespace socketUDPClient
                             thDataFromServer.Abort();   //这一句必须放在最后，不然这个进程都关了后面的就不会执行了
                             return;
                         }
-                        if(receivedData.type==MessageType.Shake)
-                        {
-                            ShowMsg(receivedData);
-                        }
-                        if (receivedData.type == MessageType.Message)
+                        if (receivedData.type == MessageType.Message|| receivedData.type == MessageType.Shake|| receivedData.type==MessageType.Img)
                         {
                             ShowMsg(receivedData);
                         }
@@ -378,6 +388,40 @@ namespace socketUDPClient
             }
         }
 
+        private void notify_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                //还原窗体显示    
+                WindowState = FormWindowState.Normal;
+                //激活窗体并给予它焦点
+                this.Activate();
+            }
+        }
+
+        private void tsmShow_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void tsmExit_Click(object sender, EventArgs e)
+        {
+            if (clientSocket != null && clientSocket.Connected)
+            {
+                thDataFromServer.Abort();
+                Packet sendData = new Packet();
+                sendData.comeName = this.uname;
+                sendData.comeNo = this.account;
+                sendData.type = MessageType.Logout;
+                byte[] data = ByteHelper.Serialize(sendData);
+                clientSocket.Send(data);
+                clientSocket.Close();
+                clientSocket = null;
+                bll.LoginOut(this.account);
+            }
+            this.Close();
+        }
+
         private void ShowMsg(Packet pct)
         {
             var friend = onLineUserList.Where(s => s.userAccount == pct.comeNo).FirstOrDefault();
@@ -394,12 +438,31 @@ namespace socketUDPClient
                     frmtcp=dicChatFrm[pct.comeNo];
                     frmtcp.Invoke(new Action(() =>
                     {
-                        frmtcp.DisplayMessage(pct.comeName, pct.msg);
-                        frmtcp.Show();
+                        if(pct.type==MessageType.Message)
+                        {
+                            frmtcp.DisplayMessage(pct.comeName, pct.msg);
+                            frmtcp.Show();
+                        }
                         if (pct.type == MessageType.Shake)
                         {
                             frmtcp.FrmShake();
+                            //pct.msg = "发来振动";
                         }
+                        if(pct.type==MessageType.Img)
+                        {
+
+                        }
+                        //frmtcp.DisplayMessage(pct.comeName, pct.msg);
+                        //frmtcp.Show();
+                        //if (pct.type == MessageType.Shake)
+                        //{
+                        //    this.thDataFromServer.sl
+                        //    if (frmtcp.WindowState == FormWindowState.Minimized)
+                        //    {
+                        //        frmtcp.WindowState = FormWindowState.Normal;
+                        //    }
+                            
+                        //}
                     }));
                 }
                 else
@@ -417,11 +480,18 @@ namespace socketUDPClient
                         frmtcp = new FrmClientTcp(ct, clientSocket);
                         frmtcp.Closed += (s, args) => this.RemoveFrm(pct.comeNo);
                         dicChatFrm.Add(pct.comeNo, frmtcp);
-                        frmtcp.DisplayMessage(pct.comeName, pct.msg);
-                        frmtcp.Show();
-                        if (pct.type == MessageType.Shake)
+                        if(pct.type==MessageType.Message)
+                        {
+                            frmtcp.DisplayMessage(pct.comeName, pct.msg);
+                            frmtcp.Show();
+                        }
+                        if(pct.type == MessageType.Shake)
                         {
                             frmtcp.FrmShake();
+                        }
+                        if (pct.type == MessageType.Img)
+                        {
+                            frmtcp.DisplayImg(pct);
                         }
                     }));
                 }
