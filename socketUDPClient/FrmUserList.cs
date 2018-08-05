@@ -75,20 +75,21 @@ namespace socketUDPClient
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (clientSocket != null && clientSocket.Connected)
-            {
-                thDataFromServer.Abort();
-                Packet sendData = new Packet();
-                sendData.comeName = this.uname;
-                sendData.comeNo = this.account;
-                sendData.type = MessageType.Logout;
-                byte[] data = ByteHelper.Serialize(sendData);
-                clientSocket.Send(data);
-                clientSocket.Close();
-                clientSocket = null;
-                bll.LoginOut(this.account);
-            }
-            this.Close();
+            ExitEvent();
+            //if (clientSocket != null && clientSocket.Connected)
+            //{
+            //    thDataFromServer.Abort();
+            //    Packet sendData = new Packet();
+            //    sendData.comeName = this.uname;
+            //    sendData.comeNo = this.account;
+            //    sendData.type = MessageType.Logout;
+            //    byte[] data = ByteHelper.Serialize(sendData);
+            //    clientSocket.Send(data);
+            //    clientSocket.Close();
+            //    clientSocket = null;
+            //    bll.LoginOut(this.account);
+            //}
+            //this.Close();
 
         }
 
@@ -270,6 +271,7 @@ namespace socketUDPClient
                                 sendData.comeNo = this.account;
                                 sendData.type = MessageType.Login;
                                 byte[] data = ByteHelper.Serialize(sendData);
+                               // clientSocket.Send(BitConverter.GetBytes(data.Length));
                                 clientSocket.Send(data);
                                 thDataFromServer = new Thread(DataFromServer);
                                 thDataFromServer.IsBackground = true;
@@ -296,14 +298,40 @@ namespace socketUDPClient
         private void DataFromServer()
         {
             isListen = true;
+            byte[] bytesFrom = new byte[4096];
             try
             {
                 while (isListen)
                 {
-                    byte[] bytesFrom = new byte[901196];
-                    Int32 len = clientSocket.Receive(bytesFrom);
+                    //clientSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
+                    int len1= clientSocket.Receive(bytesFrom);
+                    long total = BitConverter.ToInt32(bytesFrom, 0);
+                    byte[] data = new byte[len1 - 4];
+                    System.Buffer.BlockCopy(bytesFrom, 4, data, 0, len1-4);
+                   
+                    long receiveLength = len1 - 4 ;
+                    while (receiveLength<total)
+                    {
+                        int len = 0;
+                        try
+                        {
 
-                    Packet receivedData = (Packet)ByteHelper.Deserialize(bytesFrom);
+                            len = clientSocket.Receive(bytesFrom);
+                            receiveLength += len;
+                        }
+                        catch
+                        {
+
+                        }
+                        byte[] tmp = new byte[data.Length + len];
+                        System.Buffer.BlockCopy(data, 0, tmp, 0, data.Length);
+                        System.Buffer.BlockCopy(bytesFrom, 0, tmp, data.Length, len);
+                        data = tmp;
+                    }
+                    //Int32 len = clientSocket.Receive(bytesFrom);
+
+                    Packet receivedData = (Packet)ByteHelper.Deserialize(data);
+                    //Packet receivedData = (Packet)ByteHelper.Deserialize(bytesFrom);
                     if (receivedData != null)
                     {
                         //如果收到服务器已经关闭的消息，那么就把客户端接口关了，免得出错，并在客户端界面上显示出来
@@ -380,6 +408,7 @@ namespace socketUDPClient
                     sendData.comeNo = this.account;
                     sendData.type = MessageType.Logout;
                     byte[] data = ByteHelper.Serialize(sendData);
+                    clientSocket.Send(BitConverter.GetBytes(data.Length));
                     clientSocket.Send(data);
                     //没有在客户端关闭连接，而是给服务器发送一个消息，在服务器端关闭连接
                     //这样可以将异常的处理放到服务器。客户端关闭会让客户端和服务器都抛异常
@@ -406,6 +435,11 @@ namespace socketUDPClient
 
         private void tsmExit_Click(object sender, EventArgs e)
         {
+            ExitEvent();
+        }
+
+        private void ExitEvent()
+        {
             if (clientSocket != null && clientSocket.Connected)
             {
                 thDataFromServer.Abort();
@@ -414,12 +448,18 @@ namespace socketUDPClient
                 sendData.comeNo = this.account;
                 sendData.type = MessageType.Logout;
                 byte[] data = ByteHelper.Serialize(sendData);
+                clientSocket.Send(BitConverter.GetBytes(data.Length));
                 clientSocket.Send(data);
                 clientSocket.Close();
                 clientSocket = null;
                 bll.LoginOut(this.account);
             }
             this.Close();
+        }
+
+        private void ctMenu_Opening(object sender, CancelEventArgs e)
+        {
+
         }
 
         private void ShowMsg(Packet pct)
@@ -450,7 +490,7 @@ namespace socketUDPClient
                         }
                         if(pct.type==MessageType.Img)
                         {
-
+                            frmtcp.DisplayImg(pct);
                         }
                         //frmtcp.DisplayMessage(pct.comeName, pct.msg);
                         //frmtcp.Show();

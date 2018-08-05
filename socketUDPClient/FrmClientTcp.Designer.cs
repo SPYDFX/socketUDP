@@ -49,6 +49,8 @@
             this.btnHandImg = new System.Windows.Forms.Button();
             this.plHandImg = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.lblFileName = new System.Windows.Forms.Label();
             this.plHeader.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSelectedImg)).BeginInit();
@@ -59,10 +61,11 @@
             // 
             this.txtSendMsg.BackColor = System.Drawing.Color.White;
             this.txtSendMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSendMsg.Location = new System.Drawing.Point(9, 307);
+            this.txtSendMsg.Location = new System.Drawing.Point(14, 460);
+            this.txtSendMsg.Margin = new System.Windows.Forms.Padding(4);
             this.txtSendMsg.Multiline = true;
             this.txtSendMsg.Name = "txtSendMsg";
-            this.txtSendMsg.Size = new System.Drawing.Size(401, 47);
+            this.txtSendMsg.Size = new System.Drawing.Size(602, 70);
             this.txtSendMsg.TabIndex = 14;
             this.txtSendMsg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnSend_KeyDown);
             // 
@@ -74,9 +77,8 @@
             this.plHeader.Controls.Add(this.btnClose);
             this.plHeader.Controls.Add(this.btnMin);
             this.plHeader.Location = new System.Drawing.Point(0, 0);
-            this.plHeader.Margin = new System.Windows.Forms.Padding(2);
             this.plHeader.Name = "plHeader";
-            this.plHeader.Size = new System.Drawing.Size(533, 33);
+            this.plHeader.Size = new System.Drawing.Size(800, 50);
             this.plHeader.TabIndex = 18;
             this.plHeader.MouseDown += new System.Windows.Forms.MouseEventHandler(this.plHeader_MouseDown);
             this.plHeader.MouseMove += new System.Windows.Forms.MouseEventHandler(this.plHeader_MouseMove);
@@ -84,10 +86,9 @@
             // lblFriendName
             // 
             this.lblFriendName.AutoSize = true;
-            this.lblFriendName.Location = new System.Drawing.Point(213, 10);
-            this.lblFriendName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblFriendName.Location = new System.Drawing.Point(320, 15);
             this.lblFriendName.Name = "lblFriendName";
-            this.lblFriendName.Size = new System.Drawing.Size(0, 12);
+            this.lblFriendName.Size = new System.Drawing.Size(0, 18);
             this.lblFriendName.TabIndex = 10;
             // 
             // lblChatName
@@ -95,10 +96,9 @@
             this.lblChatName.AutoSize = true;
             this.lblChatName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblChatName.ForeColor = System.Drawing.Color.White;
-            this.lblChatName.Location = new System.Drawing.Point(202, 7);
-            this.lblChatName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblChatName.Location = new System.Drawing.Point(303, 10);
             this.lblChatName.Name = "lblChatName";
-            this.lblChatName.Size = new System.Drawing.Size(0, 16);
+            this.lblChatName.Size = new System.Drawing.Size(0, 24);
             this.lblChatName.TabIndex = 9;
             // 
             // btnClose
@@ -110,9 +110,10 @@
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.OrangeRed;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.OrangeRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(497, 0);
+            this.btnClose.Location = new System.Drawing.Point(746, 0);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(36, 33);
+            this.btnClose.Size = new System.Drawing.Size(54, 50);
             this.btnClose.TabIndex = 8;
             this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClose.UseVisualStyleBackColor = false;
@@ -127,9 +128,10 @@
             this.btnMin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMin.Location = new System.Drawing.Point(456, 0);
+            this.btnMin.Location = new System.Drawing.Point(684, 0);
+            this.btnMin.Margin = new System.Windows.Forms.Padding(4);
             this.btnMin.Name = "btnMin";
-            this.btnMin.Size = new System.Drawing.Size(32, 33);
+            this.btnMin.Size = new System.Drawing.Size(48, 50);
             this.btnMin.TabIndex = 7;
             this.btnMin.UseVisualStyleBackColor = false;
             this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
@@ -137,9 +139,10 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.panel5.Location = new System.Drawing.Point(0, 265);
+            this.panel5.Location = new System.Drawing.Point(0, 398);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(417, 1);
+            this.panel5.Size = new System.Drawing.Size(626, 2);
             this.panel5.TabIndex = 17;
             // 
             // button1
@@ -148,9 +151,10 @@
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(248, 359);
+            this.button1.Location = new System.Drawing.Point(372, 538);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 27);
+            this.button1.Size = new System.Drawing.Size(112, 40);
             this.button1.TabIndex = 16;
             this.button1.Text = "关闭(C)";
             this.button1.UseVisualStyleBackColor = false;
@@ -161,10 +165,11 @@
             this.lstMsg.BackColor = System.Drawing.Color.White;
             this.lstMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lstMsg.FormattingEnabled = true;
-            this.lstMsg.ItemHeight = 12;
-            this.lstMsg.Location = new System.Drawing.Point(2, 39);
+            this.lstMsg.ItemHeight = 18;
+            this.lstMsg.Location = new System.Drawing.Point(3, 58);
+            this.lstMsg.Margin = new System.Windows.Forms.Padding(4);
             this.lstMsg.Name = "lstMsg";
-            this.lstMsg.Size = new System.Drawing.Size(408, 204);
+            this.lstMsg.Size = new System.Drawing.Size(612, 306);
             this.lstMsg.TabIndex = 15;
             // 
             // btnSend
@@ -174,9 +179,10 @@
             this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSend.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(337, 359);
+            this.btnSend.Location = new System.Drawing.Point(506, 538);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 27);
+            this.btnSend.Size = new System.Drawing.Size(112, 40);
             this.btnSend.TabIndex = 13;
             this.btnSend.Text = "发送(S)";
             this.btnSend.UseVisualStyleBackColor = false;
@@ -191,10 +197,9 @@
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.btnSelectImg);
             this.panel3.Controls.Add(this.button2);
-            this.panel3.Location = new System.Drawing.Point(0, 270);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2);
+            this.panel3.Location = new System.Drawing.Point(0, 405);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(415, 28);
+            this.panel3.Size = new System.Drawing.Size(622, 42);
             this.panel3.TabIndex = 20;
             // 
             // btnShake
@@ -203,10 +208,9 @@
             this.btnShake.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnShake.FlatAppearance.BorderSize = 0;
             this.btnShake.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShake.Location = new System.Drawing.Point(179, 2);
-            this.btnShake.Margin = new System.Windows.Forms.Padding(2);
+            this.btnShake.Location = new System.Drawing.Point(268, 3);
             this.btnShake.Name = "btnShake";
-            this.btnShake.Size = new System.Drawing.Size(23, 23);
+            this.btnShake.Size = new System.Drawing.Size(34, 34);
             this.btnShake.TabIndex = 4;
             this.btnShake.UseVisualStyleBackColor = true;
             this.btnShake.Click += new System.EventHandler(this.btnShake_Click);
@@ -217,10 +221,9 @@
             this.btnSelectFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnSelectFile.FlatAppearance.BorderSize = 0;
             this.btnSelectFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectFile.Location = new System.Drawing.Point(95, 2);
-            this.btnSelectFile.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSelectFile.Location = new System.Drawing.Point(142, 3);
             this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(23, 23);
+            this.btnSelectFile.Size = new System.Drawing.Size(34, 34);
             this.btnSelectFile.TabIndex = 3;
             this.btnSelectFile.UseVisualStyleBackColor = true;
             // 
@@ -230,10 +233,9 @@
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(55, 2);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Location = new System.Drawing.Point(82, 3);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(23, 23);
+            this.button4.Size = new System.Drawing.Size(34, 34);
             this.button4.TabIndex = 2;
             this.button4.UseVisualStyleBackColor = true;
             // 
@@ -243,10 +245,9 @@
             this.btnSelectImg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnSelectImg.FlatAppearance.BorderSize = 0;
             this.btnSelectImg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectImg.Location = new System.Drawing.Point(139, 2);
-            this.btnSelectImg.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSelectImg.Location = new System.Drawing.Point(208, 3);
             this.btnSelectImg.Name = "btnSelectImg";
-            this.btnSelectImg.Size = new System.Drawing.Size(23, 23);
+            this.btnSelectImg.Size = new System.Drawing.Size(34, 34);
             this.btnSelectImg.TabIndex = 1;
             this.btnSelectImg.UseVisualStyleBackColor = true;
             this.btnSelectImg.Click += new System.EventHandler(this.btnSelectImg_Click);
@@ -257,26 +258,27 @@
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(18, 2);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Location = new System.Drawing.Point(27, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(23, 23);
+            this.button2.Size = new System.Drawing.Size(34, 34);
             this.button2.TabIndex = 0;
             this.button2.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.panel2.Location = new System.Drawing.Point(417, 34);
+            this.panel2.Location = new System.Drawing.Point(626, 51);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1, 357);
+            this.panel2.Size = new System.Drawing.Size(2, 536);
             this.panel2.TabIndex = 19;
             // 
             // picSelectedImg
             // 
-            this.picSelectedImg.Location = new System.Drawing.Point(4, 38);
+            this.picSelectedImg.Location = new System.Drawing.Point(6, 57);
+            this.picSelectedImg.Margin = new System.Windows.Forms.Padding(4);
             this.picSelectedImg.Name = "picSelectedImg";
-            this.picSelectedImg.Size = new System.Drawing.Size(77, 58);
+            this.picSelectedImg.Size = new System.Drawing.Size(116, 87);
             this.picSelectedImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picSelectedImg.TabIndex = 21;
             this.picSelectedImg.TabStop = false;
@@ -285,38 +287,67 @@
             // 
             this.btnHandImg.FlatAppearance.BorderSize = 0;
             this.btnHandImg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHandImg.Location = new System.Drawing.Point(4, 102);
+            this.btnHandImg.Location = new System.Drawing.Point(6, 152);
+            this.btnHandImg.Margin = new System.Windows.Forms.Padding(4);
             this.btnHandImg.Name = "btnHandImg";
-            this.btnHandImg.Size = new System.Drawing.Size(76, 23);
+            this.btnHandImg.Size = new System.Drawing.Size(114, 34);
             this.btnHandImg.TabIndex = 22;
             this.btnHandImg.Text = "删除";
             this.btnHandImg.UseVisualStyleBackColor = true;
+            this.btnHandImg.Click += new System.EventHandler(this.btnHandImg_Click);
             // 
             // plHandImg
             // 
+            this.plHandImg.Controls.Add(this.lblFileName);
+            this.plHandImg.Controls.Add(this.btnSave);
             this.plHandImg.Controls.Add(this.lblTitle);
             this.plHandImg.Controls.Add(this.picSelectedImg);
             this.plHandImg.Controls.Add(this.btnHandImg);
-            this.plHandImg.Location = new System.Drawing.Point(438, 39);
+            this.plHandImg.Location = new System.Drawing.Point(636, 51);
+            this.plHandImg.Margin = new System.Windows.Forms.Padding(4);
             this.plHandImg.Name = "plHandImg";
-            this.plHandImg.Size = new System.Drawing.Size(83, 128);
+            this.plHandImg.Size = new System.Drawing.Size(164, 236);
             this.plHandImg.TabIndex = 23;
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(16, 11);
+            this.lblTitle.Location = new System.Drawing.Point(4, 7);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(53, 12);
+            this.lblTitle.Size = new System.Drawing.Size(98, 18);
             this.lblTitle.TabIndex = 23;
-            this.lblTitle.Text = "已选图片";
+            this.lblTitle.Text = "已选图片：";
+            // 
+            // btnSave
+            // 
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Location = new System.Drawing.Point(4, 191);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(114, 34);
+            this.btnSave.TabIndex = 24;
+            this.btnSave.Text = "另存为";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lblFileName
+            // 
+            this.lblFileName.AutoSize = true;
+            this.lblFileName.Location = new System.Drawing.Point(4, 35);
+            this.lblFileName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFileName.Name = "lblFileName";
+            this.lblFileName.Size = new System.Drawing.Size(62, 18);
+            this.lblFileName.TabIndex = 25;
+            this.lblFileName.Text = "文件名";
             // 
             // FrmClientTcp
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(533, 390);
+            this.ClientSize = new System.Drawing.Size(800, 585);
             this.Controls.Add(this.plHandImg);
             this.Controls.Add(this.txtSendMsg);
             this.Controls.Add(this.plHeader);
@@ -327,8 +358,8 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmClientTcp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmClientTcp";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmClientTcp_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FrmClientTcp_MouseMove);
@@ -366,5 +397,7 @@
         private System.Windows.Forms.Button btnHandImg;
         private System.Windows.Forms.Panel plHandImg;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Label lblFileName;
     }
 }

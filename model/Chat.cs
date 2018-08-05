@@ -11,9 +11,21 @@ namespace model
     /// </summary>
     public class Chat
     {
+        /// <summary>
+        /// 当前用户编号
+        /// </summary>
         public string userNo;
+        /// <summary>
+        /// 当前用户名称
+        /// </summary>
         public string userName;
+        /// <summary>
+        /// 聊天对象编号
+        /// </summary>
         public string chatNo;
+        /// <summary>
+        /// 聊天对象名称
+        /// </summary>
         public string chatName;
     }
 }

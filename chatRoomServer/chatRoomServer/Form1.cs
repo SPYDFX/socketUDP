@@ -24,7 +24,7 @@ namespace chatRoomServer
         public Form1()
         {
             InitializeComponent();
-            ipadr = IPAddress.Parse("192.168.10.57") ;
+            ipadr = IPAddress.Parse("192.168.0.102") ;
         }
 
         //保存多个客户端的通信套接字
@@ -206,19 +206,7 @@ namespace chatRoomServer
                         if (len > -1)
                         {
                             var msg = (Packet)ByteHelper.Deserialize(bytesFrom);
-                            //String tmp = Encoding.UTF8.GetString(bytesFrom, 0, len);  //将字节流转换成字符串
-                            /*try
-                            {
-                                dataFromClient = EncryptionAndDecryption.TripleDESDecrypting(tmp);      //数据加密传输
-                            }
-                            catch (Exception e)
-                            {
-
-                            }
-                             catch (Exception e)
-                            {
-
-                            }*/
+                           
 
                             if (msg != null && !clientList.ContainsKey(msg.comeNo))
                             {
@@ -466,23 +454,34 @@ namespace chatRoomServer
                     }
                     if (clientSocket.Available > 0)
                     {
-                        MemoryStream stream = new MemoryStream();
-                        int len = 0;
-                        byte[] data = new byte[0];
+                        int len1 = clientSocket.Receive(bytesFromClient);
+                        long total = BitConverter.ToInt32(bytesFromClient, 0);
+                        byte[] data = new byte[len1 - 4];
+                        System.Buffer.BlockCopy(bytesFromClient, 4, data, 0, len1 - 4);
+
+                        long receiveLength = len1 - 4;
+                        //int len = clientSocket.Receive(bytesFromClient, bytesFromClient.Length, SocketFlags.None);
+                        //long total = BitConverter.ToInt64(bytesFromClient, 0);
+                        //long receiveLength = 0;
+                        //byte[] data = new byte[0];
                         //Int32 
                         // len = clientSocket.Receive(bytesFromClient);
-                        while (true)
+                        while (receiveLength < total)
                         {
-                            len = clientSocket.Receive(bytesFromClient, bytesFromClient.Length, SocketFlags.None);
-                            stream.Write(bytesFromClient, 0, len);
+                            int len = 0;
+                            try
+                            {
+                                len = clientSocket.Receive(bytesFromClient);
+                                receiveLength += len;
+                            }
+                            catch
+                            {
+
+                            }
                             byte[] tmp = new byte[data.Length + len];
                             System.Buffer.BlockCopy(data, 0, tmp, 0, data.Length);
                             System.Buffer.BlockCopy(bytesFromClient, 0, tmp, data.Length, len);
                             data = tmp;
-                            if (len < bytesFromClient.Length)
-                            {
-                                break;
-                            }   
                         }
                         //if (stream.Length > 0)
                         if (data.Length> 0)
@@ -492,8 +491,8 @@ namespace chatRoomServer
                            // dataFromClient = Encoding.UTF8.GetString(bytesFromClient, 0, len);
                             if (pct != null)
                             {
+                             
                                 //广播转发消息
-                                BroadCast.PushMessage(pct, clientList);
                                 if (pct.type==MessageType.Message&&!String.IsNullOrWhiteSpace(pct.msg))
                                 {   
                                     msgTemp = pct.comeNo + ":" + pct.msg + "\t\t" + DateTime.Now.ToString();
@@ -512,7 +511,16 @@ namespace chatRoomServer
                                     clientSocket.Close();
                                     clientSocket = null;
                                 }
-                               
+
+                                if(pct.type==MessageType.Img)
+                                {
+                                    File.AppendAllText("D:\\MessageRecords.txt", Convert.ToString(pct.toNo) + "\r\n", Encoding.UTF8);
+                                    txtMsg.BeginInvoke(new Action(() =>
+                                    {
+                                        txtMsg.Text += pct.comeNo+"To"+pct.toNo + "发送图片\r"+pct.msg + DateTime.Now + "\r\n";
+                                    }));
+                                }
+                                BroadCast.PushMessage(pct, clientList);
                             }
 
                         }
@@ -548,6 +556,9 @@ namespace chatRoomServer
                     //Byte[] castBytes = new Byte[4096];
                     try
                     {
+                        var len = data.Length;
+                        int leng = BitConverter.GetBytes(data.Length).Length;
+                        brdcastSocket.Send(BitConverter.GetBytes(data.Length));
                         brdcastSocket.Send(data);
                     }
                     catch (Exception e)
@@ -567,6 +578,7 @@ namespace chatRoomServer
                     Socket brdcastSocket = (Socket)toClient;
                     try
                     {
+                        brdcastSocket.Send(BitConverter.GetBytes(data.Length));
                         brdcastSocket.Send(data);
                     }
                     catch (Exception e)

@@ -44,9 +44,9 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.notify = new System.Windows.Forms.NotifyIcon(this.components);
             this.ctMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.ctMenu.SuspendLayout();
             this.SuspendLayout();
@@ -69,9 +69,10 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(37, 13);
+            this.textBox1.Location = new System.Drawing.Point(56, 20);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(205, 14);
+            this.textBox1.Size = new System.Drawing.Size(308, 21);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "搜索";
             // 
@@ -80,9 +81,10 @@
             this.panel1.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(0, 117);
+            this.panel1.Location = new System.Drawing.Point(0, 176);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(255, 35);
+            this.panel1.Size = new System.Drawing.Size(382, 52);
             this.panel1.TabIndex = 2;
             // 
             // button1
@@ -94,9 +96,10 @@
             this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(11, 10);
+            this.button1.Location = new System.Drawing.Point(16, 15);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(20, 17);
+            this.button1.Size = new System.Drawing.Size(30, 26);
             this.button1.TabIndex = 2;
             this.button1.UseVisualStyleBackColor = false;
             // 
@@ -109,9 +112,10 @@
             this.btnMin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMin.Location = new System.Drawing.Point(179, -1);
+            this.btnMin.Location = new System.Drawing.Point(268, -2);
+            this.btnMin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMin.Name = "btnMin";
-            this.btnMin.Size = new System.Drawing.Size(32, 33);
+            this.btnMin.Size = new System.Drawing.Size(48, 50);
             this.btnMin.TabIndex = 3;
             this.btnMin.UseVisualStyleBackColor = false;
             this.btnMin.Click += new System.EventHandler(this.btnMin_Click);
@@ -125,9 +129,10 @@
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.OrangeRed;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.OrangeRed;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(217, -1);
+            this.btnClose.Location = new System.Drawing.Point(326, -2);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(36, 33);
+            this.btnClose.Size = new System.Drawing.Size(54, 50);
             this.btnClose.TabIndex = 4;
             this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClose.UseVisualStyleBackColor = false;
@@ -136,9 +141,10 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.Location = new System.Drawing.Point(0, 200);
+            this.panel2.Location = new System.Drawing.Point(0, 300);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(255, 332);
+            this.panel2.Size = new System.Drawing.Size(382, 498);
             this.panel2.TabIndex = 6;
             // 
             // btnOnLineUserList
@@ -149,9 +155,10 @@
             this.btnOnLineUserList.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
             this.btnOnLineUserList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOnLineUserList.ForeColor = System.Drawing.Color.White;
-            this.btnOnLineUserList.Location = new System.Drawing.Point(0, 167);
+            this.btnOnLineUserList.Location = new System.Drawing.Point(0, 250);
+            this.btnOnLineUserList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOnLineUserList.Name = "btnOnLineUserList";
-            this.btnOnLineUserList.Size = new System.Drawing.Size(127, 33);
+            this.btnOnLineUserList.Size = new System.Drawing.Size(190, 50);
             this.btnOnLineUserList.TabIndex = 7;
             this.btnOnLineUserList.Text = "在线用户";
             this.btnOnLineUserList.UseVisualStyleBackColor = false;
@@ -163,9 +170,10 @@
             this.btnOffLineUserList.FlatAppearance.BorderSize = 0;
             this.btnOffLineUserList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOffLineUserList.ForeColor = System.Drawing.Color.White;
-            this.btnOffLineUserList.Location = new System.Drawing.Point(127, 167);
+            this.btnOffLineUserList.Location = new System.Drawing.Point(190, 250);
+            this.btnOffLineUserList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOffLineUserList.Name = "btnOffLineUserList";
-            this.btnOffLineUserList.Size = new System.Drawing.Size(128, 33);
+            this.btnOffLineUserList.Size = new System.Drawing.Size(192, 50);
             this.btnOffLineUserList.TabIndex = 8;
             this.btnOffLineUserList.Text = "离线用户";
             this.btnOffLineUserList.UseVisualStyleBackColor = false;
@@ -180,9 +188,10 @@
             this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(25, 28);
+            this.button4.Location = new System.Drawing.Point(38, 42);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 52);
+            this.button4.Size = new System.Drawing.Size(112, 78);
             this.button4.TabIndex = 9;
             this.button4.UseVisualStyleBackColor = false;
             // 
@@ -193,19 +202,20 @@
             this.lblUserName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblUserName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblUserName.ForeColor = System.Drawing.Color.White;
-            this.lblUserName.Location = new System.Drawing.Point(118, 44);
+            this.lblUserName.Location = new System.Drawing.Point(177, 66);
+            this.lblUserName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(93, 16);
+            this.lblUserName.Size = new System.Drawing.Size(135, 24);
             this.lblUserName.TabIndex = 10;
             this.lblUserName.Text = "三片叶的风";
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.panel3.Location = new System.Drawing.Point(0, 536);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0, 1, 0, 0);
+            this.panel3.Location = new System.Drawing.Point(0, 804);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(255, 32);
+            this.panel3.Size = new System.Drawing.Size(382, 48);
             this.panel3.TabIndex = 11;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
@@ -218,42 +228,44 @@
             // 
             // ctMenu
             // 
+            this.ctMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.ctMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmShow,
             this.toolStripSeparator1,
             this.tsmExit});
             this.ctMenu.Name = "ctMenu";
-            this.ctMenu.Size = new System.Drawing.Size(101, 54);
+            this.ctMenu.Size = new System.Drawing.Size(199, 99);
             this.ctMenu.Text = "退出";
-            // 
-            // tsmExit
-            // 
-            this.tsmExit.Name = "tsmExit";
-            this.tsmExit.Size = new System.Drawing.Size(152, 22);
-            this.tsmExit.Text = "退出";
-            this.tsmExit.Click += new System.EventHandler(this.tsmExit_Click);
+            this.ctMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ctMenu_Opening);
             // 
             // tsmShow
             // 
             this.tsmShow.Name = "tsmShow";
-            this.tsmShow.Size = new System.Drawing.Size(152, 22);
+            this.tsmShow.Size = new System.Drawing.Size(198, 28);
             this.tsmShow.Text = "显示";
             this.tsmShow.Click += new System.EventHandler(this.tsmShow_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(195, 6);
+            // 
+            // tsmExit
+            // 
+            this.tsmExit.Name = "tsmExit";
+            this.tsmExit.Size = new System.Drawing.Size(198, 28);
+            this.tsmExit.Text = "退出";
+            this.tsmExit.Click += new System.EventHandler(this.tsmExit_Click);
             // 
             // FrmUserList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.BackgroundImage = global::socketUDPClient.Properties.Resources.Jellyfish;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(253, 568);
+            this.ClientSize = new System.Drawing.Size(380, 852);
             this.Controls.Add(this.btnMin);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.lblUserName);
@@ -264,6 +276,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmUserList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmUserList";

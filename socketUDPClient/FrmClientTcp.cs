@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -30,6 +31,7 @@ namespace socketUDPClient
             this.ct = chat;
             lblFriendName.Text = ct.chatName;
             plHandImg.Visible = false;
+            btnSave.Visible = false;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -154,6 +156,9 @@ namespace socketUDPClient
             {
                 picSelectedImg.ImageLocation = file.FileName;
                 plHandImg.Visible = true;
+                lblFileName.Text = file.SafeFileName;
+                btnHandImg.Text = "删除";
+                btnSave.Visible = false;
             }
            
             //picSelectedImg.
@@ -175,7 +180,8 @@ namespace socketUDPClient
                 sendData.msg = filename;
                 sendData.file = ImageHelper.ImageToBytes(img);
                 byte[] data = ByteHelper.Serialize(sendData);
-               int result= skt.Send(data);
+                skt.Send(BitConverter.GetBytes(data.Length));
+                int result= skt.Send(data);
                 DisplayMessage(ct.userName, "已发送图片"+ filename+"，发送长度："+ result);
             }
             if (!string.IsNullOrWhiteSpace(txtSendMsg.Text))
@@ -186,9 +192,72 @@ namespace socketUDPClient
                 sendData.type = MessageType.Message;
                 sendData.msg = txtSendMsg.Text;
                 byte[] data = ByteHelper.Serialize(sendData);
+                skt.Send(BitConverter.GetBytes(data.Length));
                 skt.Send(data);
                 DisplayMessage(ct.userName, txtSendMsg.Text);
                 txtSendMsg.Text = "";
+            }
+        }
+
+        private void btnHandImg_Click(object sender, EventArgs e)
+        {
+            if(btnHandImg.Text=="保存")
+            {
+                var img = picSelectedImg.Image;
+                var path = System.IO.Directory.GetCurrentDirectory()+ "\\Receive\\Images\\";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                path = path + "\\" + lblFileName.Text;
+                img.Save(path);
+                picSelectedImg.Image = null;
+                plHandImg.Visible = false;
+                MessageBox.Show("保存成功!");
+                DisplayMessage(ct.userName, "已保存图片 " + path);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDlg = new SaveFileDialog();
+            saveDlg.Title = "保存为";
+            saveDlg.OverwritePrompt = true;
+            saveDlg.Filter =
+                "BMP文件 (*.bmp) | *.bmp|" +
+                "Gif文件 (*.gif) | *.gif|" +
+                "JPEG文件 (*.jpg) | *.jpg|" +
+                "PNG文件 (*.png) | *.png";
+            saveDlg.ShowHelp = true;
+            if (saveDlg.ShowDialog() == DialogResult.OK)
+            {
+                var img = picSelectedImg.Image;
+                string fileName = saveDlg.FileName;
+                string strFilExtn = fileName.Remove(0, fileName.Length - 3);
+                switch (strFilExtn)
+                {               
+                    case "bmp":
+                        img.Save(fileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                    case "jpg":
+                        img.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case "gif":
+                        img.Save(fileName, System.Drawing.Imaging.ImageFormat.Gif);
+                        break;
+                    case "tif":
+                        img.Save(fileName, System.Drawing.Imaging.ImageFormat.Tiff);
+                        break;
+                    case "png":
+                        img.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    default:
+                        break;
+                }
+                picSelectedImg.Image = null;
+                plHandImg.Visible = false;
+                MessageBox.Show("保存成功!");
+                DisplayMessage(ct.userName, "已保存图片 " + fileName);
             }
         }
 
@@ -196,11 +265,18 @@ namespace socketUDPClient
         {
             if(pct.file!=null)
             {
+                this.Show();
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
                 picSelectedImg.Image = ImageHelper.BytesToImage(pct.file);
+                lblFileName.Text = pct.msg;
                 plHandImg.Visible = true;
-                btnHandImg.Text = "另存为";
+                btnSave.Visible = true;
+                btnHandImg.Text = "保存";
                 lblTitle.Text = "已接收图片";
-                DisplayMessage(ct.chatName, "已接收图片" + pct.msg);
+                DisplayMessage(ct.chatName, "发来图片" + pct.msg);
             }
         }
     }
