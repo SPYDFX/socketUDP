@@ -154,9 +154,9 @@ namespace socketUDPClient
             file.ShowDialog();
             if(file!=null)
             {
-                picSelectedImg.ImageLocation = file.FileName;
+                picSelectedImg.ImageLocation = file.FileName;//包含路径的文件名
                 plHandImg.Visible = true;
-                lblFileName.Text = file.SafeFileName;
+                lblFileName.Text = file.SafeFileName;//只有文件名
                 btnHandImg.Text = "删除";
                 btnSave.Visible = false;
             }
